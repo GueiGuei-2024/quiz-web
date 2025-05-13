@@ -20,6 +20,7 @@ export default function StartPage({ onStart }: Props) {
   console.log(result.files[0].$id);
   console.log(pic);
 
+ 
   const [selectedLabels, setSelectedLabels] = useState<string[]>(labels);
   const [numQuestions, setNumQuestions] = useState(5);
   const [randomize, setRandomize] = useState(true);

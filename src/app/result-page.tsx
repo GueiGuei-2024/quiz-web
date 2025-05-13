@@ -103,13 +103,15 @@ export default function ResultPage({ questions, answers, onRestart }: Props) {
     },
   };
 
-  const filteredQuestions = questions.filter((q, i) => {
-    const ans = answers[i];
-    if (filter === "correct") return ans?.correct;
-    if (filter === "wrong") return ans && !ans.correct;
-    if (filter === "unanswered") return !ans;
-    return true;
-  });
+  const filteredQuestions = questions
+    .map((q, i) => ({ question: q, index: i }))
+    .filter(({ index }) => {
+      const ans = answers[index];
+      if (filter === "correct") return ans?.correct;
+      if (filter === "wrong") return ans && !ans.correct;
+      if (filter === "unanswered") return !ans;
+      return true;
+    });
 
   return (
     <div className="p-4 max-w-5xl mx-auto">
@@ -190,16 +192,17 @@ export default function ResultPage({ questions, answers, onRestart }: Props) {
         </button>
       </div>
 
-      {filteredQuestions.map((q, i) => {
-        const userAns = answers[i] ?? null;
-        const correctSet:string[] = q.answer.toUpperCase().match(/[A-D]/g) || [];
+      {filteredQuestions.map(({ question: q, index }) => {
+        const userAns = answers[index] ?? null;
+        const correctSet: string[] =
+          q.answer.toUpperCase().match(/[A-D]/g) || [];
         const isAnswered = userAns !== null;
         const selected = userAns?.selected;
         const isCorrect = userAns?.correct ?? false;
 
         return (
           <div
-            key={i}
+            key={index}
             className={`mb-4 p-4 rounded border ${
               !isAnswered
                 ? "border-gray-300"
@@ -209,7 +212,7 @@ export default function ResultPage({ questions, answers, onRestart }: Props) {
             }`}
           >
             <p className="font-semibold mb-2">
-              第 {i + 1} 題：{q.question}
+              第 {index+1} 題：{q.question}
             </p>
             {q.picture && (
               <img
@@ -235,7 +238,7 @@ export default function ResultPage({ questions, answers, onRestart }: Props) {
                   key={opt}
                   className={`ml-2 px-2 py-1 rounded-md inline-block mr-2 mb-1 text-sm ${highlight}`}
                 >
-                  {opt}. {q[`option${opt}` as keyof Question] }
+                  {opt}. {q[`option${opt}` as keyof Question]}
                 </div>
               );
             })}
