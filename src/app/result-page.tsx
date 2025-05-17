@@ -112,7 +112,7 @@ export default function ResultPage({ questions, answers, onRestart }: Props) {
       if (filter === "unanswered") return !ans;
       return true;
     });
-
+  console.log(filteredQuestions);
   return (
     <div className="p-4 max-w-5xl mx-auto">
       <div className="flex flex-col md:flex-row justify-between mb-6 gap-4">
@@ -212,11 +212,11 @@ export default function ResultPage({ questions, answers, onRestart }: Props) {
             }`}
           >
             <p className="font-semibold mb-2">
-              第 {index+1} 題：{q.question}
+              第 {index + 1} 題：{q.question}
             </p>
             {q.picture && (
               <img
-                src={`/picture/${q.picture}`}
+                src={q.picture}
                 alt="圖片"
                 className="mx-auto max-w-xs mb-2"
               />
@@ -250,6 +250,18 @@ export default function ResultPage({ questions, answers, onRestart }: Props) {
                   }`
                 : `未作答，正確答案是 ${q.answer}`}
             </p>
+            <div className="flex">
+              {[q.exam_time, q.exam_type, `第${q.question_number}題`, q.tag].map(
+                (content, idx) => (
+                  <p
+                    key={idx}
+                    className="flex-none my-4 mx-2 px-4 rounded-sm bg-green-100 w-auto text-center "
+                  >
+                    {content}
+                  </p>
+                )
+              )}
+            </div>
           </div>
         );
       })}

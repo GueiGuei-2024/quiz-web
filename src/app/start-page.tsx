@@ -3,24 +3,17 @@
 import { useState, useEffect } from "react";
 // import questions_2 from "./test_bank/2025-1-醫學3-questions.json";
 // import questions from "./test_bank/2025-1-醫學4-questions.json";
-import type { Question , AppwriteQuestion} from "./types";
-import {
-  result,
-  pic,
-  getQuestions
-} from "../lib/appwrite";
+import type { Question, AppwriteQuestion } from "./types";
+import { getQuestions } from "../lib/appwrite";
 import QuestionBankButton from "./components/Question_bank_button";
+import { fetchPictureURL } from "../lib/appwrite";
 
 type Props = {
   onStart: (selectedQuestions: Question[], timerMinutes: number) => void;
 };
-const labels = ["114-1", "113-1", "113-2"]; //設定按鈕
+const labels = ["113-1", "113-2"]; //設定按鈕
 
 export default function StartPage({ onStart }: Props) {
-  console.log(result.files[0].$id);
-  console.log(pic);
-
- 
   const [selectedLabels, setSelectedLabels] = useState<string[]>(labels);
   const [numQuestions, setNumQuestions] = useState(5);
   const [randomize, setRandomize] = useState(true);
@@ -39,24 +32,48 @@ export default function StartPage({ onStart }: Props) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (selectedLabels.length > 0) {
-      setLoading(true);
-      console.time("取得題目時間");
-      getQuestions().then((res) => {
+  if (selectedLabels.length > 0) {
+    setLoading(true);
+    console.time("取得題目時間");
+
+    const fetchData = async () => {
+      try {
+        const res = await getQuestions();
         const data = res.documents.map((doc) => doc as AppwriteQuestion);
-        setQuestionbank(data);
-        setLoading(false);
+
+        // 遍歷每一題，處理 picture 欄位
+        const updated = await Promise.all(
+          data.map(async (q) => {
+            if (q.picture) {
+              const url = await fetchPictureURL(q.picture);
+              return { ...q, picture: url };
+            }
+            return q;
+          })
+        );
+
+        setQuestionbank(updated);
         console.timeEnd("取得題目時間");
-      });
-    }
-  }, []);
+      } catch (err) {
+        console.error("取得題目錯誤", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }
+}, []);
+
 
   const handleBegin = () => {
     if (loading || !questionbank || questionbank.length === 0) return;
+    if (selectedLabels.length === 0) return alert("請至少選擇一個題庫!!!");
 
-    let pool = questionbank.filter( obj => selectedLabels.includes(obj.exam_time));
-    
-    console.log(questionbank);
+    let pool = questionbank.filter((obj) =>
+      selectedLabels.includes(obj.exam_time)
+    );
+
     console.log(pool);
     if (randomize) pool = pool.sort(() => 0.5 - Math.random());
 

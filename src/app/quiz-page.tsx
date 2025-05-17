@@ -75,7 +75,7 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
   return (
     <div className="p-4 max-w-2xl mx-auto">
       <div className="flex justify-between mb-2 text-sm">
-        <p>{answers.length}</p>
+        {/* <p>{answers.length}</p> */}
         <div>
           第 {currentIndex + 1} / {questions.length} 題
         </div>

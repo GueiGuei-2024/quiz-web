@@ -8,7 +8,7 @@ export type Question = {
   optionD: string;
   answer: string;
   title:string;
-  picture?: string;
+  picture?: string| null;
   exam_time:string;
   exam_type:string;
   tag:string;
@@ -22,7 +22,7 @@ export type AppwriteQuestion =Models.Document & {
   optionD: string;
   answer: string;
   title:string;
-  picture?: string;
+  picture?: string| null;
   exam_time:string;
   exam_type:string;
   tag:string;
