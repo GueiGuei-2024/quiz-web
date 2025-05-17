@@ -83,7 +83,7 @@ export default function ResultPage({ questions, answers, onRestart }: Props) {
     responsive: true,
     plugins: {
       legend: { display: false },
-      title: { display: true, text: "各標籤正確率分析" },
+      title: { display: true, text: "科別正確率分析 (長條圖)" },
     },
     scales: { y: { beginAtZero: true, max: 100 } },
   };
@@ -92,7 +92,7 @@ export default function ResultPage({ questions, answers, onRestart }: Props) {
     responsive: true,
     plugins: {
       legend: { display: false },
-      title: { display: true, text: "各標籤正確率分析 (雷達圖)" },
+      title: { display: true, text: "科別正確率分析 (雷達圖)" },
     },
     scales: {
       r: {
@@ -138,7 +138,7 @@ export default function ResultPage({ questions, answers, onRestart }: Props) {
         </div>
 
         <div className="flex-1 border rounded p-4">
-          <h2 className="text-lg font-semibold mb-2">📊 各 tag 正確率統計</h2>
+          <h2 className="text-lg font-semibold mb-2">📊 答題統計</h2>
           {chartType === "bar" ? (
             <Bar data={chartData} options={barOptions} />
           ) : (

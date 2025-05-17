@@ -6,6 +6,7 @@ import { getQuestions } from "../lib/appwrite";
 import QuestionBankButton from "./components/Question_bank_button";
 import { fetchPictureURL } from "../lib/appwrite";
 import { FullscreenLoading } from "./components/LoadingAnimation";
+import Link from "next/link";
 
 type Props = {
   onStart: (selectedQuestions: Question[], timerMinutes: number) => void;
@@ -96,6 +97,7 @@ export default function StartPage({ onStart }: Props) {
   return (
     <div className="p-4 max-w-xl mx-auto">
       {loading && <FullscreenLoading />}
+      <Link href='/about'>About!!!</Link>
       <h1 className="text-xl font-bold mb-4 text-center">選擇測驗設定</h1>
       <h1 className="text-xl font-bold mb-4 text-center">選擇題庫</h1>
 

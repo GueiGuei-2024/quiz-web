@@ -18,11 +18,10 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
   >([]);
   const [remainingSeconds, setRemainingSeconds] = useState(timeLimit * 60);
 
-
   const normalize = (str: string) => str?.trim().toUpperCase();
 
   const currentQuestion = questions[currentIndex];
-  const correctAnswers :string[] =
+  const correctAnswers: string[] =
     normalize(currentQuestion.answer).match(/[A-D]/g) || [];
 
   const handleAnswer = (choice: string) => {
@@ -40,9 +39,6 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
       setCurrentIndex(currentIndex + 1);
     }
   };
-
-  
-  
 
   // 倒數計時功能
   useEffect(() => {
@@ -88,7 +84,7 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
         <h2 className="text-lg font-bold mb-2">第{currentIndex + 1}題</h2>
         <p className="mb-4">{currentQuestion.question}</p>
 
-        {currentQuestion.picture  && (
+        {currentQuestion.picture && (
           <>
             <img
               src={currentQuestion.picture}
@@ -118,11 +114,18 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
           </button>
         ))}
 
+        
         <div className="flex">
-          <p className="flex-none my-4 px-4 rounded-sm bg-green-100 w-20 text-center ">{currentQuestion.exam_time}</p>
-          <p className="flex-initial ml-4 my-4 px-4 rounded-sm bg-green-100 w-20 text-center ">{currentQuestion.exam_type}</p>
-          
-          <p className="flex-initial ml-4 my-4 px-4 rounded-sm bg-green-100 w-20 text-center ">{currentQuestion.question_number}</p>
+          {[currentQuestion.exam_time, currentQuestion.exam_type, `第${currentQuestion.question_number}題`].map(
+            (content, idx) => (
+              <p
+                key={idx}
+                className="flex-none my-4 mx-2 px-4 rounded-sm bg-green-100 w-auto text-center "
+              >
+                {content}
+              </p>
+            )
+          )}
         </div>
 
         {selected && (
