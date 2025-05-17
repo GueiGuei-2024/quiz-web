@@ -95,6 +95,7 @@ export default function StartPage({ onStart }: Props) {
 
   return (
     <div className="p-4 max-w-xl mx-auto">
+      {loading && <FullscreenLoading />}
       <h1 className="text-xl font-bold mb-4 text-center">選擇測驗設定</h1>
       <h1 className="text-xl font-bold mb-4 text-center">選擇題庫</h1>
 
@@ -202,7 +203,6 @@ export default function StartPage({ onStart }: Props) {
         開始測驗
       </button>
 
-      {loading && <FullscreenLoading />}
     </div>
   );
 }
