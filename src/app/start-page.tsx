@@ -1,93 +1,95 @@
 "use client";
 
-import { useState, useEffect } from "react";
-// import questions_2 from "./test_bank/2025-1-醫學3-questions.json";
-// import questions from "./test_bank/2025-1-醫學4-questions.json";
+import { useState } from "react";
 import type { Question, AppwriteQuestion } from "./types";
 import { getQuestions } from "../lib/appwrite";
 import QuestionBankButton from "./components/Question_bank_button";
 import { fetchPictureURL } from "../lib/appwrite";
+import { FullscreenLoading } from "./components/LoadingAnimation";
 
 type Props = {
   onStart: (selectedQuestions: Question[], timerMinutes: number) => void;
 };
-const labels = ["113-1", "113-2"]; //設定按鈕
+
+const examTimes = ["113-1", "113-2"];
+const examTypes = ["醫學3", "醫學4", "醫學5", "醫學6"];
 
 export default function StartPage({ onStart }: Props) {
-  const [selectedLabels, setSelectedLabels] = useState<string[]>(labels);
   const [numQuestions, setNumQuestions] = useState(5);
   const [randomize, setRandomize] = useState(true);
   const [mandatoryIndex, setMandatoryIndex] = useState<number | null>(null);
   const [timeLimit, setTimeLimit] = useState(80);
-  const [questionbank, setQuestionbank] = useState<AppwriteQuestion[] | null>();
   const presetOptions = [5, 10, 20, 40];
+  const [selectedExamTimes, setSelectedExamTimes] =
+    useState<string[]>(examTimes);
+  const [selectedExamTypes, setSelectedExamTypes] =
+    useState<string[]>(examTypes);
 
-  const handleClick = (label: string) => {
-    setSelectedLabels((prev) =>
-      prev.includes(label) ? prev.filter((l) => l !== label) : [...prev, label]
+  const toggleSelection = (
+    value: string,
+    setList: React.Dispatch<React.SetStateAction<string[]>>
+  ) => {
+    setList((prev: string[]) =>
+      prev.includes(value)
+        ? prev.filter((item: string) => item !== value)
+        : [...prev, value]
     );
-    console.log(selectedLabels);
   };
 
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-  if (selectedLabels.length > 0) {
-    setLoading(true);
-    console.time("取得題目時間");
+  const handleBegin = async () => {
+    console.log(selectedExamTimes);
+    console.log(selectedExamTypes);
+    if (loading) return;
 
-    const fetchData = async () => {
-      try {
-        const res = await getQuestions();
-        const data = res.documents.map((doc) => doc as AppwriteQuestion);
+    if (selectedExamTimes.length === 0 || selectedExamTypes.length === 0) {
+      alert("請至少選擇一個 [題庫] 和一個 [考試類別]!!!");
+      return;
+    }
 
-        // 遍歷每一題，處理 picture 欄位
-        const updated = await Promise.all(
-          data.map(async (q) => {
-            if (q.picture) {
-              const url = await fetchPictureURL(q.picture);
-              return { ...q, picture: url };
-            }
-            return q;
-          })
-        );
+    try {
+      setLoading(true);
+      console.time("取得題目時間");
 
-        setQuestionbank(updated);
-        console.timeEnd("取得題目時間");
-      } catch (err) {
-        console.error("取得題目錯誤", err);
-      } finally {
-        setLoading(false);
+      const res = await getQuestions(selectedExamTimes, selectedExamTypes);
+      const data = res.documents.map((doc) => doc as AppwriteQuestion);
+
+      const updated = await Promise.all(
+        data.map(async (q) => {
+          if (q.picture) {
+            const url = await fetchPictureURL(q.picture);
+            return { ...q, picture: url };
+          }
+          return q;
+        })
+      );
+
+      let pool = updated;
+
+      if (randomize) {
+        pool = pool.sort(() => 0.5 - Math.random());
       }
-    };
 
-    fetchData();
-  }
-}, []);
+      if (
+        mandatoryIndex !== null &&
+        mandatoryIndex >= 1 &&
+        mandatoryIndex <= pool.length
+      ) {
+        const must = pool[mandatoryIndex - 1];
+        pool = pool.filter((q) => q !== must);
+        const selected = [must, ...pool.slice(0, numQuestions - 1)];
+        onStart(selected, timeLimit);
+      } else {
+        onStart(pool.slice(0, numQuestions), timeLimit);
+      }
 
-
-  const handleBegin = () => {
-    if (loading || !questionbank || questionbank.length === 0) return;
-    if (selectedLabels.length === 0) return alert("請至少選擇一個題庫!!!");
-
-    let pool = questionbank.filter((obj) =>
-      selectedLabels.includes(obj.exam_time)
-    );
-
-    console.log(pool);
-    if (randomize) pool = pool.sort(() => 0.5 - Math.random());
-
-    if (
-      mandatoryIndex !== null &&
-      mandatoryIndex >= 1 &&
-      mandatoryIndex <= pool.length
-    ) {
-      const must = pool[mandatoryIndex - 1];
-      pool = pool.filter((q) => q !== must);
-      const selected = [must, ...pool.slice(0, numQuestions - 1)];
-      onStart(selected, timeLimit);
-    } else {
-      onStart(pool.slice(0, numQuestions), timeLimit);
+      console.timeEnd("取得題目時間");
+    } catch (err) {
+      console.error("取得題目錯誤", err);
+      alert("題目載入失敗，請稍後再試");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -96,11 +98,27 @@ export default function StartPage({ onStart }: Props) {
       <h1 className="text-xl font-bold mb-4 text-center">選擇測驗設定</h1>
       <h1 className="text-xl font-bold mb-4 text-center">選擇題庫</h1>
 
-      <div className="flex gap-4 justify-center mb-4">
-        {labels.map((label) => (
-          <QuestionBankButton key={label} name={label} onClick={handleClick} />
+      <div className="flex gap-4 justify-center mb-4 flex-wrap">
+        {examTimes.map((label) => (
+          <QuestionBankButton
+            key={label}
+            name={label}
+            onClick={() => toggleSelection(label, setSelectedExamTimes)}
+          />
         ))}
       </div>
+
+      <h1 className="text-xl font-bold mb-4 text-center">選擇考試類別</h1>
+      <div className="flex gap-4 justify-center mb-4 flex-wrap">
+        {examTypes.map((label) => (
+          <QuestionBankButton
+            key={label}
+            name={label}
+            onClick={() => toggleSelection(label, setSelectedExamTypes)}
+          />
+        ))}
+      </div>
+
       <div className="mb-4">
         <label className="block font-semibold mb-2">題目數量：</label>
         <div className="flex gap-2 mb-2 flex-wrap">
@@ -183,6 +201,8 @@ export default function StartPage({ onStart }: Props) {
       >
         開始測驗
       </button>
+
+      {loading && <FullscreenLoading />}
     </div>
   );
 }
