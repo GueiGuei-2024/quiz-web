@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from "react";
 import type { Question } from "./types";
-import { BUCKET_ID, storage } from "@/lib/appwrite";
-import { Query } from "appwrite";
 
 type Props = {
   questions: Question[];
@@ -20,7 +18,6 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
   >([]);
   const [remainingSeconds, setRemainingSeconds] = useState(timeLimit * 60);
 
-  const [picture, setPicture] = useState<string | null>(null);
 
   const normalize = (str: string) => str?.trim().toUpperCase();
 
@@ -44,43 +41,8 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
     }
   };
 
-  //尋找圖片功能
-  const fetchPictureURL = async (fileName: string): Promise<string | null> => {
-    try {
-      const result = await storage.listFiles(BUCKET_ID, [
-        Query.equal("name", fileName),
-      ]);
-
-      if (result.total === 0) {
-        console.warn("找不到圖片", fileName);
-        return null;
-      }
-
-      const file = result.files[0];
-
-      // 方法一：回傳圖片預覽 URL（可顯示於 <img>）
-      return storage.getFileView(BUCKET_ID, file.$id);
-
-      // 方法二：若你需要可直接下載的檔案網址，可以改成
-      // return storage.getFileView(BUCKET_ID, file.$id).href;
-    } catch (err) {
-      console.error("圖片查詢錯誤", err);
-      return null;
-    }
-  };
-
-  useEffect(() => {
-    const loadPicture = async () => {
-      if (currentQuestion.picture) {
-        const url = await fetchPictureURL(currentQuestion.picture);
-        setPicture(url);
-      } else {
-        setPicture(null);
-      }
-    };
-
-    loadPicture();
-  }, [currentIndex]);
+  
+  
 
   // 倒數計時功能
   useEffect(() => {
@@ -126,10 +88,10 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
         <h2 className="text-lg font-bold mb-2">第{currentIndex + 1}題</h2>
         <p className="mb-4">{currentQuestion.question}</p>
 
-        {currentQuestion.picture && picture && (
+        {currentQuestion.picture  && (
           <>
             <img
-              src={picture}
+              src={currentQuestion.picture}
               alt="題目圖片"
               className="mx-auto my-2 max-w-full"
             />
