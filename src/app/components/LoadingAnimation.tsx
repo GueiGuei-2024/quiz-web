@@ -26,11 +26,11 @@ export function LoadingSpinner() {
 }
 
 
-export function FullscreenLoading() {
+export function FullscreenLoading({content}:{content:string}) {
   return (
     <div className="scale-100 md:scale-150 fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
       <LoadingSpinner />
-      <p className="text-white text-lg ml-4 text-2xl">題目載入中...</p>
+      <p className="text-white text-lg ml-4 text-2xl">{content}</p>
     </div>
   );
 }

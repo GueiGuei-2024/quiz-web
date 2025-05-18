@@ -96,8 +96,8 @@ export default function StartPage({ onStart }: Props) {
 
   return (
     <div className="p-4 max-w-xl mx-auto">
-      {loading && <FullscreenLoading />}
-      <Link href='/about'>About!!!</Link>
+      {loading && <FullscreenLoading content={"題目載入中..."}/>}
+      
       <h1 className="text-xl font-bold mb-4 text-center">選擇測驗設定</h1>
       <h1 className="text-xl font-bold mb-4 text-center">選擇題庫</h1>
 
@@ -198,13 +198,16 @@ export default function StartPage({ onStart }: Props) {
         />
       </div>
 
+        
       <button
         onClick={handleBegin}
         className="w-full bg-blue-600 text-white px-4 py-2 rounded font-semibold"
       >
         開始測驗
       </button>
-
+      <div className="flex place-content-end">
+        <Link href="/about" className="text-gray-200 mt-5 text-left">開發中功能!</Link>
+      </div>
     </div>
   );
 }
