@@ -12,6 +12,7 @@ export type Question = {
   exam_time:string;
   exam_type:string;
   tag:string;
+  optionIsPicture?: string|null;
 }
 export type AppwriteQuestion =Models.Document & {
   question_number:number;
@@ -26,4 +27,11 @@ export type AppwriteQuestion =Models.Document & {
   exam_time:string;
   exam_type:string;
   tag:string;
+  optionIsPicture?: string|null;
+}
+
+export type AnswerQuestion = Question & {
+  selected: string|null;
+  corrected: boolean|null;
+  index: number;
 }
