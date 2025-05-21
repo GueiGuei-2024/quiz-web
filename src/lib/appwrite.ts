@@ -3,6 +3,7 @@ import { Client, Storage, Databases, Query, Account, ID } from "appwrite";
 const BUCKET_ID = process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID!;
 const DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!;
 const COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID!;
+const COLLECTION_ID_RECORD=process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_RECORD!;
 
 const client = new Client()
   .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
@@ -68,6 +69,38 @@ export async function getCurrentUser (){
 
 export async function logOut(){
   await account.deleteSession("current")
+}
+
+export async function createNewCollection(
+  time:string, 
+  exam_time:string, 
+  exam_type:string,
+  number:number, 
+  correct:number, 
+  wrong:number, 
+  unanswered:number
+){
+  try {
+    const res=await databases.createDocument(
+      DATABASE_ID,
+      COLLECTION_ID_RECORD,
+      ID.unique(),
+      {
+        test_time:time,
+        exam_time:exam_time,
+        exam_type:exam_type,
+        total_number:number,
+        correct:correct,
+        wrong:wrong,
+        unanswered: unanswered
+      }
+    )
+    console.log("success!!")
+    console.log(res)
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
 }
 
 export { storage, databases, BUCKET_ID, DATABASE_ID, COLLECTION_ID };

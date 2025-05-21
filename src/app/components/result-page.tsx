@@ -33,9 +33,10 @@ ChartJS.register(
 type Props = {
   onRestart: () => void;
   answeredQuestions: AnswerQuestion[];
+  timeSpend:number;
 };
 
-export default function ResultPage({ answeredQuestions, onRestart }: Props) {
+export default function ResultPage({ answeredQuestions, onRestart, timeSpend }: Props) {
   const [chartType, setChartType] = useState<"bar" | "radar">("bar");
   const [filter, setFilter] = useState<
     "all" | "correct" | "wrong" | "unanswered"
@@ -59,6 +60,7 @@ export default function ResultPage({ answeredQuestions, onRestart }: Props) {
     });
   });
 
+  console.log(tagStats)
   const labels = Object.keys(tagStats);
   const correctRates = labels.map((tag) =>
     tagStats[tag].total
@@ -113,6 +115,7 @@ export default function ResultPage({ answeredQuestions, onRestart }: Props) {
       return true;
     });
   console.log(filteredQuestions);
+
   return (
     <div className="p-4 max-w-5xl mx-auto">
       <div className="flex flex-col md:flex-row justify-between mb-6 gap-4">
@@ -126,6 +129,7 @@ export default function ResultPage({ answeredQuestions, onRestart }: Props) {
               答對題數：{correctCount} / {total}
             </p>
             <p className="mb-2">未作答題數：{unansweredCount}</p>
+            <p>時間花費:{Math.floor(timeSpend / 60)}分{timeSpend % 60}秒</p>
           </div>
           <div className="text-center my-6">
             <button
@@ -260,7 +264,9 @@ export default function ResultPage({ answeredQuestions, onRestart }: Props) {
             <p>
                 {q.selected
                 ? `${
-                    q.corrected ? `✅ 正確，答案是 ${q.answer}` : `❌ 錯誤，正確答案是 ${q.answer}`
+                    q.corrected 
+                    ? `✅ 正確，答案是 ${q.answer}` 
+                    : `❌ 錯誤，正確答案是 ${q.answer}`
                   }`
                 : ""}
             </p>

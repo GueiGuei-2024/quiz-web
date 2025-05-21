@@ -7,14 +7,13 @@ import {JumpToQuestion} from "./JumpToQuestion";
 
 type Props = {
   questions: Question[];
-  onFinish: (answers: AnswerQuestion[]) => void;
+  onFinish: (answers: AnswerQuestion[], timeSpend:number) => void;
   timeLimit: number;
 };
 
 //type OptionKey = 'A' | 'B' | 'C' | 'D';
 export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  
   const [remainingSeconds, setRemainingSeconds] = useState(timeLimit * 60);
 
   const normalize = (str: string) => str?.trim().toUpperCase();
@@ -63,25 +62,12 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
   const jumpIndex =(index:number)=>{
     setCurrentIndex(index)
   }
-  // const handleAnswer = (choice: string) => {
-  //   if (selected !== null) return;
-  //   setSelected(choice);
-  //   const correct = correctAnswers.includes(normalize(choice));
-  //   setAnswers((prev) => [...prev, { selected: choice, correct }]);
-  // };
-
-  // const handleNext = () => {
-  //   if (currentIndex + 1 >= questions.length) {
-  //     onFinish(answers);
-  //   } else {
-  //     setSelected(null);
-  //     setCurrentIndex(currentIndex + 1);
-  //   }
-  // };
 
   const setFinish = (answer: AnswerQuestion[]) => {
+    const timespend=timeLimit*60-remainingTimeRef.current
+    console.log(timespend)
     if (confirm("確定要送出答案嗎? 送出答案後無法再進行修改。") == true) {
-      onFinish(answer);
+      onFinish(answer, timespend);
     }
   };
 
@@ -89,6 +75,12 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
   useEffect(() => {
     quizItemsRef.current = quizItems;
   }, [quizItems]);
+
+  const remainingTimeRef = useRef(remainingSeconds);
+
+  useEffect(() => {
+    remainingTimeRef.current = remainingSeconds;
+  }, [remainingSeconds]);
 
   // 倒數計時功能
   useEffect(() => {
@@ -99,19 +91,19 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
 
           setTimeout(() => {
             alert("時間到，自動交卷!");
-
-            onFinish(quizItemsRef.current);
+            const timespend=timeLimit*60-remainingTimeRef.current
+            onFinish(quizItemsRef.current, timespend);
           }, 0);
 
           return 0;
         }
         return prev - 1;
       });
-    }, 1000);
-
+    }
+    , 1000);
+    
     return () => clearInterval(timer);
   }, []);
-
   const formatTime = (sec: number) => {
     const m = Math.floor(sec / 60)
       .toString()
@@ -121,7 +113,7 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
   };
 
   return (
-    <div className="p-4 max-w-2xl mx-auto">
+    <div className="p-4 max-w-4xl mx-auto">
       <div className="flex justify-between mb-2 text-sm">
         {/* <p>{answers.length}</p> */}
         <div>
@@ -150,7 +142,7 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
           <button
             key={opt}
             onClick={() => handleAnswer(currentIndex, opt)}
-            className={`block border w-full text-left rounded-sm px-4 py-2 mb-2 hover:bg-gray-100  ${
+            className={`block border-2 w-full text-left rounded-sm px-4 py-2 mb-2 hover:border-green-200   ${
               currentQuestion.selected === opt ? "bg-green-300" : ""
             }`}
           >

@@ -25,6 +25,7 @@ export default function StartPage({ onStart }: Props) {
     useState<string[]>(examTimes);
   const [selectedExamTypes, setSelectedExamTypes] =
     useState<string[]>(examTypes);
+    
 
   const toggleSelection = (
     value: string,
@@ -95,22 +96,6 @@ export default function StartPage({ onStart }: Props) {
       
       onStart(pool.slice(0, numQuestions) , timeLimit)
       
-      // if (randomize) {
-      //   pool = pool.sort(() => 0.5 - Math.random());
-      // }
-
-      // if (
-      //   mandatoryIndex !== null &&
-      //   mandatoryIndex >= 1 &&
-      //   mandatoryIndex <= pool.length
-      // ) {
-      //   const must = pool[mandatoryIndex - 1];
-      //   pool = pool.filter((q) => q !== must);
-      //   const selected = [must, ...pool.slice(0, numQuestions - 1)];
-      //   onStart(selected, timeLimit);
-      // } else {
-      //   onStart(pool.slice(0, numQuestions), timeLimit);
-      // }
 
       console.timeEnd("取得題目時間");
     } catch (err) {
