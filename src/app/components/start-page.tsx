@@ -12,7 +12,7 @@ type Props = {
   onStart: (selectedQuestions: Question[], timerMinutes: number) => void;
 };
 
-const examTimes = ["113-1", "113-2"];
+const examTimes = ["113-1", "113-2", "112-1"];
 const examTypes = ["醫學3", "醫學4", "醫學5", "醫學6"];
 
 export default function StartPage({ onStart }: Props) {
