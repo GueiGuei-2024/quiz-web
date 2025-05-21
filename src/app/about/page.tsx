@@ -26,9 +26,9 @@ export default function About() {
     <div>
         {isLoading && <FullscreenLoading content={"等待中..."}/>}
       <Layout isLogin={isLogin}>
-        <h1 className="text-2xl font-bold">歡迎來到首頁</h1>
+        <h1 className="text-2xl font-bold">歡迎來到首頁!</h1>
+        <p>網站測試中!</p>
       </Layout>
-      <div>hello, about!</div>
     </div>
   );
 }

@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import type { Question, AnswerQuestion } from "../types";
-import { Button } from "@/components/ui/button";
+import { Button  } from "@/components/ui/button";
+import {JumpToQuestion} from "./JumpToQuestion";
 
 type Props = {
   questions: Question[];
@@ -59,6 +60,9 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
     }
   };
 
+  const jumpIndex =(index:number)=>{
+    setCurrentIndex(index)
+  }
   // const handleAnswer = (choice: string) => {
   //   if (selected !== null) return;
   //   setSelected(choice);
@@ -201,6 +205,7 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
             </Button>
           </div>
           <div>
+            <JumpToQuestion quizItems={quizItems} handleIndex={jumpIndex}/>
             <Button onClick={() => setFinish(quizItems)} className="mx-2">
               送出答案
             </Button>

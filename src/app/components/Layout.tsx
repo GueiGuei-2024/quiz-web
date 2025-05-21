@@ -23,7 +23,7 @@ export default function Layout({ children, isLogin }: { children: React.ReactNod
           🏠 首頁
         </Link>
         <div className="space-x-4">
-          <Link href="/exam">考試</Link>
+          <Link href="/test">考試</Link>
           <Link href="/questions">題目列表</Link>
           <Link href="/analytics">個人分析</Link>
           {isLogin === false

@@ -254,10 +254,15 @@ export default function ResultPage({ answeredQuestions, onRestart }: Props) {
 
             <p className="mt-2">
               {q.selected
-                ? `你的答案：${q.selected}，${
-                    q.corrected ? `✅ 正確` : `❌ 錯誤，正確答案是 ${q.answer}`
-                  }`
+                ? `你的答案：${q.selected}`
                 : `未作答，正確答案是 ${q.answer}`}
+            </p>
+            <p>
+                {q.selected
+                ? `${
+                    q.corrected ? `✅ 正確，答案是 ${q.answer}` : `❌ 錯誤，正確答案是 ${q.answer}`
+                  }`
+                : ""}
             </p>
             <div className="flex">
               {[
