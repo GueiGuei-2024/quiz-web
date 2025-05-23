@@ -6,7 +6,7 @@ type QuestionBankButtonProps = {
 };
 
 export default function QuestionBankButton({ name, onClick } : QuestionBankButtonProps) {
-  const [selected, setSelected] = useState(true);
+  const [selected, setSelected] = useState(false);
   const handleSelected = () => {
     setSelected(!selected);
     onClick(name);

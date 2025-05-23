@@ -12,7 +12,7 @@ type Props = {
   onStart: (selectedQuestions: Question[], timerMinutes: number) => void;
 };
 
-const examTimes = ["113-1", "113-2", "112-1"];
+const examTimes = ["113-1", "113-2", "112-1", "112-2", "111-1", "111-2"];
 const examTypes = ["醫學3", "醫學4", "醫學5", "醫學6"];
 
 export default function StartPage({ onStart }: Props) {
@@ -22,9 +22,9 @@ export default function StartPage({ onStart }: Props) {
   const [timeLimit, setTimeLimit] = useState(80);
   const presetOptions = [5, 10, 20, 40];
   const [selectedExamTimes, setSelectedExamTimes] =
-    useState<string[]>(examTimes);
+    useState<string[]>([]);
   const [selectedExamTypes, setSelectedExamTypes] =
-    useState<string[]>(examTypes);
+    useState<string[]>([]);
     
 
   const toggleSelection = (
@@ -111,8 +111,8 @@ export default function StartPage({ onStart }: Props) {
       {loading && <FullscreenLoading content={"題目載入中..."}/>}
       
       <h1 className="text-xl font-bold mb-4 text-center">選擇測驗設定</h1>
-      <h1 className="text-xl font-bold mb-4 text-center">選擇題庫</h1>
-
+      <h1 className="text-xl font-bold text-center">選擇題庫</h1>
+      <p className="text-m mb-4 text-center">(請選擇至少一個題庫)</p>
       <div className="flex gap-4 justify-center mb-4 flex-wrap">
         {examTimes.map((label) => (
           <QuestionBankButton
@@ -123,7 +123,8 @@ export default function StartPage({ onStart }: Props) {
         ))}
       </div>
 
-      <h1 className="text-xl font-bold mb-4 text-center">選擇考試類別</h1>
+      <h1 className="text-xl font-bold text-center">選擇考試類別</h1>
+      <p className="text-m mb-4 text-center">(請選擇至少一考試類別)</p>
       <div className="flex gap-4 justify-center mb-4 flex-wrap">
         {examTypes.map((label) => (
           <QuestionBankButton
