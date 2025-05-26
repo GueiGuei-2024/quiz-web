@@ -2,17 +2,31 @@
 
 import { useState, useEffect, useRef } from "react";
 import type { Question, AnswerQuestion } from "../types";
-import { Button  } from "@/components/ui/button";
-import {JumpToQuestion} from "./JumpToQuestion";
+import { Button } from "@/components/ui/button";
+import { JumpToQuestion } from "./JumpToQuestion";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  // CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import { ModeToggle } from "./ModeToggle";
+import { Badge } from "@/components/ui/badge";
 
 type Props = {
   questions: Question[];
-  onFinish: (answers: AnswerQuestion[], timeSpend:number) => void;
+  onFinish: (answers: AnswerQuestion[], timeSpend: number) => void;
   timeLimit: number;
 };
 
 //type OptionKey = 'A' | 'B' | 'C' | 'D';
-export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
+export default function FormalQuizPage({
+  questions,
+  onFinish,
+  timeLimit,
+}: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [remainingSeconds, setRemainingSeconds] = useState(timeLimit * 60);
 
@@ -25,7 +39,8 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
     corrected: null,
   }));
 
-  const [quizItems, setQuizItems] = useState<AnswerQuestion[]>(initialQuizItems);
+  const [quizItems, setQuizItems] =
+    useState<AnswerQuestion[]>(initialQuizItems);
 
   const currentQuestion = quizItems[currentIndex];
   const correctAnswers: string[] =
@@ -59,13 +74,13 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
     }
   };
 
-  const jumpIndex =(index:number)=>{
-    setCurrentIndex(index)
-  }
+  const jumpIndex = (index: number) => {
+    setCurrentIndex(index);
+  };
 
   const setFinish = (answer: AnswerQuestion[]) => {
-    const timespend=timeLimit*60-remainingTimeRef.current
-    console.log(timespend)
+    const timespend = timeLimit * 60 - remainingTimeRef.current;
+    console.log(timespend);
     if (confirm("確定要送出答案嗎? 送出答案後無法再進行修改。") == true) {
       onFinish(answer, timespend);
     }
@@ -91,7 +106,7 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
 
           setTimeout(() => {
             alert("時間到，自動交卷!");
-            const timespend=timeLimit*60-remainingTimeRef.current
+            const timespend = timeLimit * 60 - remainingTimeRef.current;
             onFinish(quizItemsRef.current, timespend);
           }, 0);
 
@@ -99,9 +114,8 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
         }
         return prev - 1;
       });
-    }
-    , 1000);
-    
+    }, 1000);
+
     return () => clearInterval(timer);
   }, []);
   const formatTime = (sec: number) => {
@@ -122,61 +136,75 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
         <div className="text-red-600 font-semibold">
           倒數：{formatTime(remainingSeconds)}
         </div>
+        <ModeToggle />
       </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>第{currentIndex + 1}題</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="mb-4">{currentQuestion.question}</p>
 
-      <div className="border rounded shadow p-4 mb-4 bg-white">
-        <h2 className="text-lg font-bold mb-2">第{currentIndex + 1}題</h2>
-        <p className="mb-4">{currentQuestion.question}</p>
+          {currentQuestion.picture && (
+            <>
+              <img
+                src={currentQuestion.picture}
+                alt="題目圖片"
+                className="mx-auto my-2 max-w-full"
+              />
+            </>
+          )}
 
-        {currentQuestion.picture && (
-          <>
-            <img
-              src={currentQuestion.picture}
-              alt="題目圖片"
-              className="mx-auto my-2 max-w-full"
-            />
-          </>
-        )}
-
-        {["A", "B", "C", "D"].map((opt) => (
-          <button
-            key={opt}
-            onClick={() => handleAnswer(currentIndex, opt)}
-            className={`block border-2 w-full text-left rounded-sm px-4 py-2 mb-2 hover:border-green-200   ${
-              currentQuestion.selected === opt ? "bg-green-300" : ""
-            }`}
-          >
-            {currentQuestion.optionIsPicture === null ? (
-              `${opt}. ${currentQuestion[`option${opt}` as keyof Question]}`
-            ) : (
-              <>
-                {opt}.
-                <img
-                  src={currentQuestion[`option${opt}` as keyof Question] as string | undefined}
-                  className="mx-auto my-2 max-w-full"
-                ></img>
-              </>
-            )}
-          </button>
-        ))}
-
-        <div className="flex">
-          {[
-            currentQuestion.exam_time,
-            currentQuestion.exam_type,
-            `第${currentQuestion.question_number}題`,
-          ].map((content, idx) => (
-            <p
-              key={idx}
-              className="flex-none my-4 mx-2 px-4 rounded-sm bg-green-100 w-auto text-center "
+          {["A", "B", "C", "D"].map((opt) => (
+            <>
+            <button
+              key={opt}
+              onClick={() => handleAnswer(currentIndex, opt)}
+              className={`block border-2 w-full text-left rounded-sm px-4 py-2 mb-2 hover:border-green-200   ${
+                currentQuestion.selected === opt ? "bg-green-300" : ""
+              }`}
             >
-              {content}
-            </p>
-          ))}
-        </div>
+              {currentQuestion.optionIsPicture === null ? (
+                `${opt}. ${currentQuestion[`option${opt}` as keyof Question]}`
+              ) : (
+                <>
+                  {opt}.
+                  <img
+                    src={
+                      currentQuestion[`option${opt}` as keyof Question] as
+                        | string
+                        | undefined
+                    }
+                    className="mx-auto my-2 max-w-full"
+                  ></img>
+                </>
+              )}
+            </button>
 
-        <div className="flex mt-2 justify-between">
-          <div>
+          </>
+            
+          ))}
+
+          <div className="flex">
+            {[
+              currentQuestion.exam_time,
+              currentQuestion.exam_type,
+              `第${currentQuestion.question_number}題`,
+            ].map((content, idx) => (
+              <>
+                {/* <p
+                  key={idx}
+                  className="overflow-auto mt-4 mx-2 px-4 rounded-sm bg-green-100 w-auto text-center "
+                >
+                  {content}
+                </p> */}
+                <Badge key={idx} variant={"secondary"} className="overflow-auto mt-4 mx-2 px-4 rounded-sm w-auto text-center text-md">{content}</Badge>
+              </>
+            ))}
+          </div>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <div className="overflow-auto ">
             <Button
               onClick={() => setCurrentIndex(0)}
               className="mx-2 items-center"
@@ -197,13 +225,17 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
             </Button>
           </div>
           <div>
-            <JumpToQuestion quizItems={quizItems} handleIndex={jumpIndex}/>
-            <Button onClick={() => setFinish(quizItems)} className="mx-2">
+            <JumpToQuestion quizItems={quizItems} handleIndex={jumpIndex} />
+            <Button
+              variant="destructive"
+              onClick={() => setFinish(quizItems)}
+              className="mx-2"
+            >
               送出答案
             </Button>
           </div>
-        </div>
-      </div>
+        </CardFooter>
+      </Card>
     </div>
   );
 }

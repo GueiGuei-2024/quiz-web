@@ -4,6 +4,7 @@ import { logOut } from '@/lib/appwrite';
 import { Button } from '@/components/ui/button';
 import { useRouter } from "next/navigation";
 
+
 export default function Layout({ children, isLogin }: { children: React.ReactNode, isLogin:boolean }) {
     const router = useRouter()
 

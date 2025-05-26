@@ -2,24 +2,30 @@
 
 import { useState } from "react"
 import StartPage from "../components/start-page"
-import QuizPage from "../components/quiz-page"
 import ResultPage from "../components/result-page"
 import type { Question, AnswerQuestion } from "../types"
 import { createNewCollection } from "@/lib/appwrite"
+import FormalQuizPage from "../components/quiz-page"
+import ChooseExamPage from "../components/choose-exam-page"
 
 export default function QuizEntry() {
-  const [stage, setStage] = useState<"start" | "quiz" | "result">("start")
+  const [stage, setStage] = useState<"start" | "setting"| "quiz" | "result">("setting")
   const [questions, setQuestions] = useState<Question[]>([]) 
   const [answeredQuestions, setAnsweredQuestions] = useState<AnswerQuestion[]>([])
   //const [answers, setAnswers] = useState<{ selected: string; correct: boolean }[]>([])
   const [timerMinutes, setTimerMinutes] = useState(80)
   const [timeSpend, setTimeSpend] = useState(0)
 
+  const handleSetting = ()=>{
+    setStage("start")
+  }
+
   const handleStart = (selected: Question[], time: number) => {
   setQuestions(selected)
   setTimerMinutes(time)
   setStage("quiz")
 }
+  
 
   const handleFinish = (answers: AnswerQuestion[], timeSpend:number) => {
     setAnsweredQuestions(answers)
@@ -41,7 +47,11 @@ export default function QuizEntry() {
   const handleRestart = () => {
     //setAnswers([])
     setQuestions([])
-    setStage("start")
+    setStage("setting")
+  }
+
+  if (stage==="setting"){
+    return <ChooseExamPage onSetting={handleSetting}/>
   }
 
   if (stage === "start") {
@@ -49,7 +59,7 @@ export default function QuizEntry() {
   }
 
   if (stage === "quiz") {
-    return <QuizPage questions={questions} timeLimit={timerMinutes} onFinish={handleFinish} />
+    return <FormalQuizPage questions={questions} timeLimit={timerMinutes} onFinish={handleFinish} />
   }
 
   return <ResultPage answeredQuestions={answeredQuestions}  onRestart={handleRestart} timeSpend={timeSpend}/>

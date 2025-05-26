@@ -36,14 +36,14 @@ export function JumpToQuestion({ quizItems, handleIndex }:Props) {
         <Button variant="outline">答題狀況</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-3/4 container mx-auto">
-        <ScrollArea className="h-120 sm:max-w-4/5 whitespace-nowrap rounded-md border">
+        <ScrollArea className="h-120 overflow-hidden whitespace-nowrap rounded-md border">
           <div className="p-4 container">
             <DialogHeader className="mt-2 mb-4">
               <DialogTitle className="text-2xl">答題狀況</DialogTitle>
               <DialogDescription className="text-xl">點選題號可以跳轉到該題</DialogDescription>
             </DialogHeader>
 
-            <ScrollArea className="sm:max-w-4/5 max-h-4/5 whitespace-nowrap rounded-md border">
+            <ScrollArea className="overflow-hidden max-h-4/5 whitespace-nowrap rounded-md border">
               <Table>
                 <TableHeader>
                   <TableRow>

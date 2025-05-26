@@ -17,7 +17,7 @@ export default function QuestionBankButton({ name, onClick } : QuestionBankButto
       id={name}
       key={name}
       onClick={() => handleSelected()}
-      className={`px-3 py-1 rounded border transition-colors duration-200
+      className={`px-3 py-1 rounded border transition-colors duration-200 
         ${
         selected 
         ? "bg-blue-500 text-white hover:opacity-80" 

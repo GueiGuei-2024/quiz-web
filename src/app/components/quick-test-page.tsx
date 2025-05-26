@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import type { Question } from "./types";
+import type { Question } from "../types";
 
 type Props = {
   questions: Question[];
@@ -10,7 +10,7 @@ type Props = {
 };
 
 //type OptionKey = 'A' | 'B' | 'C' | 'D';
-export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
+export default function QuickQuizPage({ questions, onFinish, timeLimit }: Props) {
   console.log(questions)
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
