@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import StartPage from "../components/start-page"
+// import StartPage from "../components/start-page"
 import ResultPage from "../components/result-page"
 import type { Question, AnswerQuestion } from "../types"
 import { createNewCollection } from "@/lib/appwrite"
@@ -9,18 +9,15 @@ import FormalQuizPage from "../components/quiz-page"
 import ChooseExamPage from "../components/choose-exam-page"
 
 export default function QuizEntry() {
-  const [stage, setStage] = useState<"start" | "setting"| "quiz" | "result">("setting")
+  const [stage, setStage] = useState<"start"| "quiz" | "result">("start")
   const [questions, setQuestions] = useState<Question[]>([]) 
   const [answeredQuestions, setAnsweredQuestions] = useState<AnswerQuestion[]>([])
-  //const [answers, setAnswers] = useState<{ selected: string; correct: boolean }[]>([])
   const [timerMinutes, setTimerMinutes] = useState(80)
   const [timeSpend, setTimeSpend] = useState(0)
+  const [examType, setExamType] = useState<string>("quick")
 
-  const handleSetting = ()=>{
-    setStage("start")
-  }
-
-  const handleStart = (selected: Question[], time: number) => {
+  const handleStart = (selected: Question[], time: number, ExamType:string) => {
+  setExamType(ExamType)
   setQuestions(selected)
   setTimerMinutes(time)
   setStage("quiz")
@@ -45,21 +42,20 @@ export default function QuizEntry() {
   }
 
   const handleRestart = () => {
-    //setAnswers([])
     setQuestions([])
-    setStage("setting")
+    setStage("start")
   }
 
-  if (stage==="setting"){
-    return <ChooseExamPage onSetting={handleSetting}/>
-  }
+  // if (stage==="setting"){
+  //   return <ChooseExamPage onStart={handleStart}/>
+  // }
 
   if (stage === "start") {
-    return <StartPage onStart={handleStart} />
+    return <ChooseExamPage onStart={handleStart} />
   }
 
   if (stage === "quiz") {
-    return <FormalQuizPage questions={questions} timeLimit={timerMinutes} onFinish={handleFinish} />
+    return <FormalQuizPage questions={questions} timeLimit={timerMinutes} onFinish={handleFinish} examType={examType}/>
   }
 
   return <ResultPage answeredQuestions={answeredQuestions}  onRestart={handleRestart} timeSpend={timeSpend}/>

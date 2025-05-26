@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { logOut } from '@/lib/appwrite';
 import { Button } from '@/components/ui/button';
 import { useRouter } from "next/navigation";
+import { GraduationCapIcon } from 'lucide-react';
 
 
 export default function Layout({ children, isLogin }: { children: React.ReactNode, isLogin:boolean }) {
@@ -18,29 +19,31 @@ export default function Layout({ children, isLogin }: { children: React.ReactNod
       }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white">
-      <nav className="flex items-center justify-between p-4 bg-gray-100 dark:bg-gray-800">
-        <Link href="/" className="text-xl font-bold">
-          🏠 首頁
+    <div className="min-h-screen bg-gray-900 text-white dark:bg-gray-900 text-black dark:text-white">
+      <nav className="flex items-center justify-between p-4 bg-gray-800 dark:bg-gray-800">
+        <Link href="/" className="text-xl font-bold flex space-x-2 ml-4 scale-125 justify-center items-center">
+          <GraduationCapIcon/> <span>首頁</span>
         </Link>
-        <div className="space-x-4">
-          <Link href="/test">考試</Link>
-          <Link href="/questions">題目列表</Link>
-          <Link href="/analytics">個人分析</Link>
+        <div className="space-x-5 text-xl font-semibold flex justify-center items-center mr-4">
+          <Link href="/test">模擬考試</Link>
+          <Link href="/question_review">題目列表</Link>
+          {/* <Link href="/analytics">個人分析</Link> */}
           {isLogin === false
-          ?<Button
+          ?<Button size={'lg'}
+          disabled
           >
             <Link href="/login">登入</Link>
           </Button>
           
           :<Button
+          disabled
             onClick={handleLogout}  
           >
             登出
           </Button>}
         </div>
       </nav>
-      <main className="p-4">{children}</main>
+      <main className="p-4 flex justify-center items-center h-150 w-full">{children}</main>
     </div>
   );
 }

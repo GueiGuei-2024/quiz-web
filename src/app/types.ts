@@ -13,6 +13,7 @@ export type Question = {
   exam_type:string;
   tag:string;
   optionIsPicture?: string|null;
+  bind?: string|null
 }
 export type AppwriteQuestion =Models.Document & {
   question_number:number;
@@ -28,6 +29,7 @@ export type AppwriteQuestion =Models.Document & {
   exam_type:string;
   tag:string;
   optionIsPicture?: string|null;
+  bind?: string|null
 }
 
 export type AnswerQuestion = Question & {
