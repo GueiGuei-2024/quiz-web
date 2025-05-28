@@ -28,11 +28,11 @@ export default function About() {
       {isLoading && <FullscreenLoading content={"等待中..."} />}
       <Layout isLogin={isLogin}>
         <div className="text-center">
-          <div className="flex justify-center gap-8 items-center my-4">
-            <Link href="./test">
+          <div className="flex flex-wrap justify-center gap-8 items-center my-4 overflow-auto">
+            <Link href="./test" className="shrink">
               <Button
                 variant={"ghost"}
-                className="h-80 w-80 border-4 text-4xl font-bold text-gray-400 hover:border-indigo-500 hover:bg-gray-800 hover:text-white cursor-pointer"
+                className="size-auto md:size-60 border-4 text-2xl md:text-4xl font-bold text-gray-400 hover:border-indigo-500 hover:bg-gray-800 hover:text-white cursor-pointer"
               >
                 模擬考試
               </Button>
@@ -40,7 +40,7 @@ export default function About() {
             <Link href="./question_review">
               <Button
                 variant={"ghost"}
-                className="h-80 w-80 border-4 text-4xl font-bold text-gray-400 hover:border-indigo-500 hover:bg-gray-800 hover:text-white cursor-pointer"
+                className="size-auto md:size-60 border-4 text-2xl md:text-4xl font-bold text-gray-400 hover:border-indigo-500 hover:bg-gray-800 hover:text-white cursor-pointer"
               >
                 題目列表
               </Button>

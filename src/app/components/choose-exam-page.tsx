@@ -123,7 +123,7 @@ export default function ChooseExamPage({ onStart }: Props) {
     <div className="p-4 max-w-2xl mx-auto h-lvh content-center">
       <Card className="">
         <CardHeader className="relative">
-          <div className="absolute left-0 top-0 -translate-y-1/2">
+          <div className="justify-self-center md:absolute md:left-0 md:top-0 md:-translate-y-1/2">
             <Link href="/">
               <Button
                 variant="outline"
@@ -134,17 +134,19 @@ export default function ChooseExamPage({ onStart }: Props) {
               </Button>
             </Link>
           </div>
-          <CardTitle className="text-center text-2xl">選擇考試類型</CardTitle>
-          <div className="absolute right-0 top-0 -translate-y-1/2">
+          <div className="justify-self-center md:absolute md:right-0 md:top-0 md:-translate-y-1/2">
             <ModeToggle />
           </div>
+
+          <CardTitle className="text-center text-2xl">選擇考試類型</CardTitle>
+          
 
           <CardDescription className="text-center text-xl">
             可以使用[快速考試]或者[正式考試]
           </CardDescription>
         </CardHeader>
 
-        <div className="flex justify-center gap-6">
+        <div className="flex flex-wrap justify-center gap-4">
           <div className="p-4 text-center">
             <Button
               variant="outline"

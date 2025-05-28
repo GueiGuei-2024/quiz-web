@@ -33,7 +33,7 @@ export function JumpToQuestion({ quizItems, handleIndex }:Props) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">答題狀況</Button>
+        <Button variant="outline" className="mb-2 mx-2">答題狀況</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-3/4 container mx-auto ">
         <ScrollArea className="h-120 overflow-hidden whitespace-nowrap rounded-md border-2 dark:border-primary">

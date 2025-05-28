@@ -61,8 +61,8 @@ export default function CarouselDemo() {
   };
 
   return (
-    <div className="mx-auto w-full bg-gray-100s content-center h-dvh p-6 flex justify-center space-x-15">
-      <Card className="w-1/5 flex-none">
+    <div className="mx-auto w-full bg-gray-100s content-center h-dvh p-6 md:flex justify-center space-x-15">
+      <Card className="w-full md:w-1/5 flex-none mb-4">
         <div className="relative">
           <p className="justify-self-center font-semibold text-xl mb-2">
             選擇考試時間
@@ -116,12 +116,12 @@ export default function CarouselDemo() {
           </Button>
           </Link>
           {loading ? (
-            <Button disabled className="w-auto mx-2 ">
+            <Button disabled className="w-auto mx-2 overflow-hidden">
               <Loader className="animate-spin" />
               載入中...
             </Button>
           ) : (
-            <Button onClick={() => handleStart()} className="w-auto mx-2">
+            <Button onClick={() => handleStart()} className="w-auto mx-2 overflow-hidden">
               <CirclePlay />
               題目設定
             </Button>
@@ -129,7 +129,7 @@ export default function CarouselDemo() {
         </div>
       </Card>
 
-      <Carousel className="w-3/5  justify-self-center">
+      <Carousel className=" w-full md:w-3/5 justify-self-center">
         {!loading ? (
           <CarouselContent>
             {questionList.map((items, index) => (
@@ -198,9 +198,9 @@ export default function CarouselDemo() {
             {Array.from({ length: 1 }).map((_, index) => (
               <CarouselItem key={index}>
                 <Card>
-                  <CardContent className="flex  items-center justify-center p-6 gap-6">
-                    <Loader2 className="animate-spin scale-200" />
-                    <p className="text-4xl font-semibold">題目載入中</p>
+                  <CardContent className="flex items-center justify-center p-6 gap-6">
+                    <Loader2 className="animate-spin scale-150" />
+                    <p className="text-2xl font-semibold">題目載入中</p>
                   </CardContent>
                 </Card>
               </CarouselItem>

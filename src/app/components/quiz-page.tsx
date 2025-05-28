@@ -261,29 +261,29 @@ export default function QuizPage({
             </p>}
         <CardFooter className="flex justify-between">
           
-          <div className="overflow-auto ">
+          <div className="overflow-auto">
             <Button
               onClick={() => setCurrentIndex(0)}
-              className="mx-2 items-center"
+              className="mx-2 mb-2"
             >
               第一題
             </Button>
-            <Button onClick={handlePrevious} className="mx-2 ">
+            <Button onClick={handlePrevious} className="mx-2 mb-2">
               上一題
             </Button>
-            <Button onClick={handleNext} className="mx-2 ">
+            <Button onClick={handleNext} className="mx-2 mb-2">
               下一題
             </Button>
             <Button
               onClick={() => setCurrentIndex(quizItems.length - 1)}
-              className="mx-2 "
+              className="mx-2 mb-2"
             >
               最後一題
             </Button>
           </div>
-          <div>
+          <div className="overflow-auto">
             <JumpToQuestion quizItems={quizItems} handleIndex={jumpIndex} />
-            <Button onClick={() => setFinish(quizItems)} className="mx-2">
+            <Button onClick={() => setFinish(quizItems)} className="mx-2 mb-2">
               送出答案
             </Button>
           </div>
