@@ -1,6 +1,6 @@
 "use client";
 
-import type { Question } from "./types";
+import type { Question } from "../types";
 import { Bar, Radar } from "react-chartjs-2";
 import {
   Chart as ChartJS,

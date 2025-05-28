@@ -6,24 +6,29 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { NotebookPenIcon, GoalIcon } from "lucide-react";
-// import { ModeToggle } from "./ModeToggle";
+import { NotebookPenIcon, GoalIcon, Loader2, Undo2 } from "lucide-react";
+import { ModeToggle } from "./ModeToggle";
 import { useState } from "react";
 import { getQuestions, fetchPictureURL } from "@/lib/appwrite";
 import { Separator } from "@/components/ui/separator";
 import { AppwriteQuestion, Question } from "../types";
+import Link from "next/link";
 
 const examTimes = ["111-1", "111-2", "112-1", "112-2", "113-1", "113-2"];
 const examTypes = ["醫學3", "醫學4", "醫學5", "醫學6"];
 
 type Props = {
-  onStart: (selectedQuestions: Question[], timerMinutes: number, ExamType:string) => void;
+  onStart: (
+    selectedQuestions: Question[],
+    timerMinutes: number,
+    ExamType: string
+  ) => void;
 };
 export default function ChooseExamPage({ onStart }: Props) {
   const [numQuestions, setNumQuestions] = useState(80);
   const [randomize, setRandomize] = useState(false);
   // const [timeLimit, setTimeLimit] = useState(120);
-  const timeLimit=120
+  const timeLimit = 120;
   const presetOptions = [5, 10, 20, 40, 80];
   const [selectedExamTimes, setSelectedExamTimes] = useState<string[]>([
     "111-1",
@@ -95,15 +100,11 @@ export default function ChooseExamPage({ onStart }: Props) {
         pool = [...pool, ...bind];
       }
 
-      if (ExamType === "formal" && randomize === true ) {
+      if (ExamType === "formal" && randomize === true) {
         const bind = pool.filter((q) => q.bind !== null);
         pool = pool.filter((q) => q.bind === null);
         pool = pool.sort(() => 0.5 - Math.random());
         pool = [...bind, ...pool];
-      }
-
-      if (ExamType=== "formal"){
-        setNumQuestions(80)
       }
 
 
@@ -121,9 +122,23 @@ export default function ChooseExamPage({ onStart }: Props) {
   return (
     <div className="p-4 max-w-2xl mx-auto h-lvh content-center">
       <Card className="">
-        {/* <ModeToggle /> */}
-        <CardHeader>
+        <CardHeader className="relative">
+          <div className="absolute left-0 top-0 -translate-y-1/2">
+            <Link href="/">
+              <Button
+                variant="outline"
+                className="w-auto mx-2 text-semibold mt-1"
+              >
+                <Undo2 className="scale-100 transition-all "/>
+                回首頁
+              </Button>
+            </Link>
+          </div>
           <CardTitle className="text-center text-2xl">選擇考試類型</CardTitle>
+          <div className="absolute right-0 top-0 -translate-y-1/2">
+            <ModeToggle />
+          </div>
+
           <CardDescription className="text-center text-xl">
             可以使用[快速考試]或者[正式考試]
           </CardDescription>
@@ -155,7 +170,8 @@ export default function ChooseExamPage({ onStart }: Props) {
               onClick={() => (
                 setExamType("formal"),
                 setSelectedExamTimes(["111-1"]),
-                setSelectedExamTypes(["醫學3"])
+                setSelectedExamTypes(["醫學3"]),
+                setNumQuestions(80)
               )}
             >
               <GoalIcon />
@@ -295,12 +311,22 @@ export default function ChooseExamPage({ onStart }: Props) {
               </div>
             </div>
           )}
-          <Button
-            onClick={() => handleBegin()}
-            className="w-full bg-indigo-500 text-white text-xl font-semibold hover:bg-indigo-300 hover:text-white"
-          >
-            開始測驗
-          </Button>
+          {!loading ? (
+            <Button
+              onClick={() => handleBegin()}
+              className="w-full bg-indigo-500 text-white text-xl font-semibold hover:bg-indigo-300 hover:text-white"
+            >
+              開始測驗
+            </Button>
+          ) : (
+            <Button
+              disabled
+              className="w-full bg-indigo-500 text-white text-xl font-semibold hover:bg-indigo-300 hover:text-white"
+            >
+              <Loader2 className="animate-spin" />
+              考題載入中.....
+            </Button>
+          )}
         </CardContent>
       </Card>
     </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import type { Question } from "./types";
+import type { Question } from "../types";
 
 type Props = {
   questions: Question[];
@@ -71,6 +71,7 @@ export default function QuizPage({ questions, onFinish, timeLimit }: Props) {
 
   return (
     <div className="p-4 max-w-2xl mx-auto">
+      
       <div className="flex justify-between mb-2 text-sm">
         {/* <p>{answers.length}</p> */}
         <div>

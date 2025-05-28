@@ -1,12 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import type { Question, AppwriteQuestion } from "./types";
-import { getQuestions } from "../lib/appwrite";
-import QuestionBankButton from "./components/Question_bank_button";
-import { fetchPictureURL } from "../lib/appwrite";
-import { FullscreenLoading } from "./components/LoadingAnimation";
+import type { Question, AppwriteQuestion } from "../types";
+import { getQuestions } from "../../lib/appwrite";
+import QuestionBankButton from "../components/Question_bank_button";
+import { fetchPictureURL } from "../../lib/appwrite";
+import { FullscreenLoading } from "../components/LoadingAnimation";
 import Link from "next/link";
+import { ModeToggle } from "../components/ModeToggle";
+import { Button } from "@/components/ui/button";
+import { Undo2 } from "lucide-react";
 
 type Props = {
   onStart: (selectedQuestions: Question[], timerMinutes: number) => void;
@@ -97,7 +100,13 @@ export default function StartPage({ onStart }: Props) {
   return (
     <div className="p-4 max-w-xl mx-auto">
       {loading && <FullscreenLoading content={"題目載入中..."}/>}
-      
+      <Link href="/" className="w-auto mx-2">
+          <Button variant={"outline"} >
+            <Undo2 />
+            
+          </Button>
+          </Link>
+      <ModeToggle/>
       <h1 className="text-xl font-bold mb-4 text-center">選擇測驗設定</h1>
       <h1 className="text-xl font-bold text-center">選擇題庫</h1>
       <p className="text-m mb-4 text-center">(請選擇至少一個題庫)</p>

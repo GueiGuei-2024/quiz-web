@@ -22,7 +22,7 @@ type Props = {
   examType: string;
 };
 
-export default function FormalQuizPage({
+export default function QuizPage({
   questions,
   onFinish,
   timeLimit,
@@ -144,19 +144,19 @@ export default function FormalQuizPage({
 
   return (
     <div className="p-4 max-w-4xl mx-auto">
-      <div className="flex justify-between mb-2 text-sm">
-        {/* <p>{answers.length}</p> */}
+      <div className="flex justify-between mb-2 text-normal">
         <div>
           第 {currentIndex + 1} / {questions.length} 題
         </div>
-        <div className="text-red-600 font-semibold">
+        <div className="text-red-600 font-semibold ">
           倒數：{formatTime(remainingSeconds)}
         </div>
-        <ModeToggle />
+        
       </div>
       <Card>
-        <CardHeader>
-          <CardTitle>第{currentIndex + 1}題</CardTitle>
+        <CardHeader className="flex justify-between items-center">
+          <CardTitle className="text-2xl">第{currentIndex + 1}題</CardTitle>
+          <ModeToggle />
         </CardHeader>
         <CardContent>
           <p className="mb-4">{currentQuestion.question}</p>
@@ -176,8 +176,8 @@ export default function FormalQuizPage({
             <button
               key={opt}
               onClick={() => handleAnswer(currentIndex, opt)}
-              className={`block border-2 w-full text-left rounded-sm px-4 py-2 mb-2 hover:border-green-200   ${
-                currentQuestion.selected === opt ? "bg-green-300" : ""
+              className={`block border-2 w-full text-left rounded-sm px-4 py-3 mb-2 hover:border-primary   ${
+                currentQuestion.selected === opt ? "bg-primary text-white" : ""
               }`}
             >
               {currentQuestion.optionIsPicture === null ? (
@@ -201,14 +201,14 @@ export default function FormalQuizPage({
             <button
               key={opt}
               onClick={() => handleAnswer_quick(currentIndex, opt)}
-              className={`block border-2 w-full text-left rounded-sm px-4 py-2 mb-2 hover:border-green-200   ${
+              className={`block border-2 w-full text-left rounded-sm px-4 py-3 mb-2 hover:border-green-200 dark:hover:border-green-600  ${
                 currentQuestion.selected    
                   ?currentQuestion.selected === opt 
                     ? correctAnswers.includes(normalize(opt))
-                      ? "bg-green-300" 
-                      : "bg-red-300"
+                      ? "bg-green-300 dark:bg-green-600" 
+                      : "bg-red-300 dark:bg-red-600"
                     : correctAnswers.includes(normalize(opt))
-                      ? "bg-green-300" 
+                      ? "bg-green-300 dark:bg-green-600" 
                       : ""
                   :""
               }`}

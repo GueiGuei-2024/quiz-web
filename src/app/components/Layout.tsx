@@ -1,22 +1,21 @@
 'use client'
 import Link from 'next/link';
-import { logOut } from '@/lib/appwrite';
-import { Button } from '@/components/ui/button';
-import { useRouter } from "next/navigation";
+// import { logOut } from '@/lib/appwrite';
+// import { useRouter } from "next/navigation";
 import { GraduationCapIcon } from 'lucide-react';
 
 
 export default function Layout({ children, isLogin }: { children: React.ReactNode, isLogin:boolean }) {
-    const router = useRouter()
-
-    const handleLogout = async ()=>{
-        try {
-            logOut();
-            router.push('/');
-        } catch (err){
-            alert(`登出失敗： ${err}`)
-        }
-      }
+    // const router = useRouter()
+    console.log(isLogin)
+    // const handleLogout = async ()=>{
+    //     try {
+    //         logOut();
+    //         router.push('/');
+    //     } catch (err){
+    //         alert(`登出失敗： ${err}`)
+    //     }
+    //   }
 
   return (
     <div className="min-h-screen bg-gray-900 text-white dark:bg-gray-900 text-black dark:text-white">
@@ -28,7 +27,8 @@ export default function Layout({ children, isLogin }: { children: React.ReactNod
           <Link href="/test">模擬考試</Link>
           <Link href="/question_review">題目列表</Link>
           {/* <Link href="/analytics">個人分析</Link> */}
-          {isLogin === false
+          
+          {/* {isLogin === false
           ?<Button size={'lg'}
           disabled
           >
@@ -40,7 +40,7 @@ export default function Layout({ children, isLogin }: { children: React.ReactNod
             onClick={handleLogout}  
           >
             登出
-          </Button>}
+          </Button>} */}
         </div>
       </nav>
       <main className="p-4 flex justify-center items-center h-150 w-full">{children}</main>
