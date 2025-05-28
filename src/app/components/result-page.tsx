@@ -141,8 +141,8 @@ export default function ResultPage({
 
   return (
     <div className="p-4 max-w-5xl mx-auto">
-      <div className="flex mb-6 gap-4">
-        <Card className="w-2/5 p-4 border-primary border-2">
+      <div className="md:flex mb-6 gap-4">
+        <Card className="w-full mb-2 md:w-2/5 p-4 border-primary border-2">
           <CardHeader>
             <CardTitle className="text-2xl font-semibold mb-4 text-center">
               答題總結
@@ -175,7 +175,7 @@ export default function ResultPage({
           </CardFooter>
         </Card>
 
-        <Card className="w-3/5 border-primary border-2">
+        <Card className="w-full mb-2 md:w-3/5 border-primary border-2">
           <CardHeader>
             <CardTitle className="text-2xl font-semibold text-center">
               {chartType} chart{" "}
@@ -252,10 +252,10 @@ export default function ResultPage({
         </Card>
       </div> */}
 
-      <div className="flex justify-center space-x-2 mb-4">
+      <div className="flex flex-wrap md:justify-center space-x-2 mb-4">
         <Button
           onClick={() => setFilter("all")}
-          className={`bg-gray-700 text-white px-4 py-2 ${
+          className={`bg-gray-700 text-white px-4 py-2 mb-2 md:mb-0 ${
             filter === "all" && "bg-primary text-white"
           }`}
         >
@@ -263,7 +263,7 @@ export default function ResultPage({
         </Button>
         <Button
           onClick={() => setFilter("correct")}
-          className={`bg-gray-700 text-white px-4 py-2 ${
+          className={`bg-gray-700 text-white px-4 py-2 mb-2 md:mb-0 ${
             filter === "correct" && "bg-primary text-white"
           }`}
         >
@@ -271,7 +271,7 @@ export default function ResultPage({
         </Button>
         <Button
           onClick={() => setFilter("wrong")}
-          className={`bg-gray-700 text-white px-4 py-2 ${
+          className={`bg-gray-700 text-white px-4 py-2 mb-2 md:mb-0 ${
             filter === "wrong" && "bg-primary text-white"
           }`}
         >
@@ -279,7 +279,7 @@ export default function ResultPage({
         </Button>
         <Button
           onClick={() => setFilter("unanswered")}
-          className={`bg-gray-700 text-white px-4 py-2  ${
+          className={`bg-gray-700 text-white px-4 py-2 mb-2 md:mb-0 ${
             filter === "unanswered" && "bg-primary text-white"
           }`}
         >
@@ -367,7 +367,7 @@ export default function ResultPage({
                   : ""}
               </p>
 
-              <div className="flex">
+              <div className="flex flex-wrap">
                 {[
                   q.exam_time,
                   q.exam_type,
