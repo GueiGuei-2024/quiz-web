@@ -10,6 +10,7 @@ export const appwriteConfig={
     questionCollectionId: process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID!,
     recordCollectionId: process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_RECORD!,
     userCollectionId: process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_USER!,
+    contactCollectionId: process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_CONTACT!
 
 }
 

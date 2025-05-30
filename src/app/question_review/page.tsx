@@ -75,7 +75,7 @@ export default function CarouselDemo() {
 
   return (
     <div className="mx-auto w-full bg-gray-100s content-center h-dvh p-6 md:flex justify-center space-x-15" >
-      <Card className="w-full md:w-1/5 flex-none mb-4">
+      <Card className="w-full md:w-1/5 flex-none mb-4 flex flex-col overflow-y-auto">
         <div className="relative">
           <p className="justify-self-center font-semibold text-xl mb-2">
             選擇考試時間

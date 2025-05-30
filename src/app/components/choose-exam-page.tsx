@@ -134,7 +134,7 @@ export default function ChooseExamPage({ onStart }: Props) {
               </Button>
             </Link>
           </div>
-          <div className="justify-self-center md:absolute md:right-0 md:top-0 md:-translate-y-1/2">
+          <div className="justify-self-center md:absolute md:right-2 md:top-0 md:-translate-y-1/2">
             <ModeToggle />
           </div>
 

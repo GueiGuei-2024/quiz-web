@@ -20,12 +20,13 @@ export default function Layout({ children, isLogin }: { children: React.ReactNod
   return (
     <div className="min-h-screen bg-gray-900 text-white dark:bg-gray-900 text-black dark:text-white">
       <nav className="flex items-center justify-between p-4 bg-gray-800 dark:bg-gray-800">
-        <Link href="/" className="text-xl font-bold flex space-x-2 ml-4 scale-125 justify-center items-center">
+        <Link href="/" className="text-base md:text-xl font-semibold md:font-bold flex space-x-2 ml-4 md:scale-125 justify-center items-center">
           <GraduationCapIcon/> <span>首頁</span>
         </Link>
-        <div className="space-x-5 text-xl font-semibold flex justify-center items-center mr-4">
+        <div className="space-x-5 text-base md:text-xl font-semibold flex justify-center items-center mr-4 flex-wrap">
           <Link href="/test">模擬考試</Link>
           <Link href="/question_review">題目列表</Link>
+          <Link href="/contact">聯絡作者</Link>
           {/* <Link href="/analytics">個人分析</Link> */}
           
           {/* {isLogin === false
@@ -43,7 +44,7 @@ export default function Layout({ children, isLogin }: { children: React.ReactNod
           </Button>} */}
         </div>
       </nav>
-      <main className="p-4 flex justify-center items-center h-150 w-full">{children}</main>
+      <main className="min-h-[calc(100vh-64px)] p-4 flex justify-center items-start ">{children}</main>
     </div>
   );
 }
