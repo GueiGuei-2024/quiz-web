@@ -194,4 +194,19 @@
   
 }
 /* Daylight */
+/* .select-text {
+  user-select: text;
+}
 
+.disable-drag * {
+  touch-action: none;
+  pointer-events: none;
+}
+
+.select-mode .embla__container {
+  pointer-events: none !important;
+}
+
+.select-mode * {
+  user-select: text !important; 
+} */

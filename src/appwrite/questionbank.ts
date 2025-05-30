@@ -1,31 +1,37 @@
-import { Client, Storage, Databases, Query, Account, ID } from "appwrite";
+import {  Query, ID } from "appwrite";
+import { database, storage, account, appwriteConfig  } from "./client";
 
-const BUCKET_ID = process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID!;
-const DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!;
-const COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID!;
-const COLLECTION_ID_RECORD=process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_RECORD!;
+// const BUCKET_ID = process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID!;
+// const DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!;
+// const COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID!;
+// const COLLECTION_ID_RECORD=process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_RECORD!;
+// const COLLECTION_ID_USERS=process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_USERS!;
 
-const client = new Client()
-  .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
-  .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID!);
+// const client = new Client()
+//   .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
+//   .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID!);
 
-const storage = new Storage(client);
-const databases = new Databases(client);
-const account = new Account(client);
+// const storage = new Storage(client);
+// const databases = new Databases(client);
+// const account = new Account(client);
 
 export async function getQuestions(examTimes: string[], examTypes: string[]) {
-  return await databases.listDocuments(DATABASE_ID, COLLECTION_ID, [
+  return await database.listDocuments(
+    appwriteConfig.databaseId, 
+    appwriteConfig.questionCollectionId, 
+    [
     Query.contains("exam_time", examTimes),
     Query.contains("exam_type", examTypes),
     Query.limit(3200),
-  ]);
+  ]
+);
 }
 
 export async function fetchPictureURL(
   fileName: string
 ): Promise<string | null> {
   try {
-    return storage.getFileView(BUCKET_ID, fileName);
+    return storage.getFileView(appwriteConfig.bucketId, fileName);
     // 方法二：若你需要可直接下載的檔案網址，可以改成
     // return storage.getFileView(BUCKET_ID, file.$id).href;
   } catch (err) {
@@ -81,9 +87,9 @@ export async function createNewCollection(
   unanswered:number
 ){
   try {
-    const res=await databases.createDocument(
-      DATABASE_ID,
-      COLLECTION_ID_RECORD,
+    const res=await database.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.recordCollectionId,
       ID.unique(),
       {
         test_time:time,
@@ -103,4 +109,4 @@ export async function createNewCollection(
   }
 }
 
-export { storage, databases, BUCKET_ID, DATABASE_ID, COLLECTION_ID };
+// export {account, storage, databases, BUCKET_ID, DATABASE_ID, COLLECTION_ID };

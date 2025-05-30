@@ -10,7 +10,7 @@ type Props = {
 };
 
 //type OptionKey = 'A' | 'B' | 'C' | 'D';
-export default function QuickQuizPage({ questions, onFinish, timeLimit }: Props) {
+export function QuickQuizPage({ questions, onFinish, timeLimit }: Props) {
   console.log(questions)
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);

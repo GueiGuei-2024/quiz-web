@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import type { Question, AppwriteQuestion } from "../types";
-import { getQuestions } from "../../lib/appwrite";
+import { getQuestions } from "../../appwrite/questionbank";
 import QuestionBankButton from "../components/Question_bank_button";
-import { fetchPictureURL } from "../../lib/appwrite";
+import { fetchPictureURL } from "../../appwrite/questionbank";
 import { FullscreenLoading } from "../components/LoadingAnimation";
 import Link from "next/link";
 import { ModeToggle } from "../components/ModeToggle";

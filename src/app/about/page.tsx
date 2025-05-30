@@ -1,37 +1,47 @@
 'use client'
 
-import Layout from "../components/Layout";
-import { useState, useEffect } from "react";
-import { getCurrentUser } from "@/lib/appwrite";
-import { FullscreenLoading } from "../components/LoadingAnimation";
+// import Layout from "../components/Layout";
+// import { useState, useEffect } from "react";
+// import { getCurrentUser } from "@/appwrite/questionbank";
+// import { FullscreenLoading } from "../components/LoadingAnimation";
+import Link from "next/link";
+import { logoutUser } from "@/appwrite/appwrite-auth";
+import { useRouter } from "next/navigation";
+import { account } from "@/appwrite/client";
+
+const currentLoader= async()=>{
+  try{
+    const user = await account.get()
+    console.log(user)
+  } catch(e){
+    console.log(e)
+  }
+  const session = await account.getSession('current');
+
+// Provider information
+console.log(session.provider);
+console.log(session.providerUid);
+console.log(session.providerAccessToken);
+  
+}
+
+currentLoader()
 
 export default function About() {
-    const [isLogin, setIsLogin] = useState(false)
-    const [isLoading, setIsLoading] = useState(true)
+  const router = useRouter()
 
-    useEffect(() => {
-            getCurrentUser().then((userdata) => {
-                if (userdata){
-                    setIsLogin(true);
-                    console.log(userdata)  
-                } else {
-                    setIsLogin(false);
-                }
-            });
-            setIsLoading(false)
-          }, []);
-    
+  const handleLogout= async()=>{
+    await logoutUser();
+    router.push('./login')
+
+  }
     
   return (
-    <div >
-        {isLoading && <FullscreenLoading content={"等待中..."}/>}
-      <Layout isLogin={isLogin}>
-        <div className="text-center">
-          <h1 className="font-semibold text-2xl my-4">歡迎來到<span className="font-bold text-indigo-500 text-4xl">醫師國考考古題專區</span>!</h1>
-          <p>網站測試中，如有bug可連絡製作人員</p>
-
-        </div>
-      </Layout>
+    <div className="flex gap-10">
+        <Link href={'./login'}>登入</Link>
+        <button onClick={handleLogout}>
+          登出
+        </button>
     </div>
   );
 }

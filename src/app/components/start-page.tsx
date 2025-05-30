@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import type { Question, AppwriteQuestion } from "../types";
-import { getQuestions } from "../../lib/appwrite";
+import { getQuestions } from "../../appwrite/questionbank";
 import QuestionBankButton from "../components/Question_bank_button";
-import { fetchPictureURL } from "../../lib/appwrite";
+import { fetchPictureURL } from "../../appwrite/questionbank";
 import { FullscreenLoading } from "../components/LoadingAnimation";
 import Link from "next/link";
 
@@ -12,7 +12,7 @@ type Props = {
   onStart: (selectedQuestions: Question[], timerMinutes: number) => void;
 };
 
-const examTimes = ["113-1", "113-2", "112-1", "112-2", "111-1", "111-2"];
+const examTimes = ["114-1","113-1", "113-2", "112-1", "112-2", "111-1", "111-2"];
 const examTypes = ["醫學3", "醫學4", "醫學5", "醫學6"];
 
 export default function StartPage({ onStart }: Props) {

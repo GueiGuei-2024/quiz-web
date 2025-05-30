@@ -2,7 +2,7 @@
 
 import Layout from "./components/Layout";
 import { useState, useEffect } from "react";
-import { getCurrentUser } from "@/lib/appwrite";
+import { getCurrentUser } from "@/appwrite/questionbank";
 import { FullscreenLoading } from "./components/LoadingAnimation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";

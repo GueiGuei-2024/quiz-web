@@ -16,18 +16,31 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { getQuestions, fetchPictureURL } from "@/lib/appwrite";
+import { useState} from "react";
+import { getQuestions, fetchPictureURL } from "@/appwrite/questionbank";
 import { AppwriteQuestion, Question } from "../types";
 import Link from "next/link";
-import { Undo2, CirclePlay, Loader, Loader2 } from "lucide-react";
+import { Undo2, CirclePlay, Loader, Loader2} from "lucide-react";
 import { ModeToggle } from "../components/ModeToggle";
+// import file from "../114-1國考-merged_with_gpt_answers.json"
+import ToggleDragMode from "../components/toggleDragMode";
+
+// function ReasonDisplay({ text }: { text: string }) {
+//   return (
+//     <div style={{ whiteSpace: 'pre-line' }}>
+//       {text}
+//     </div>
+//   )
+// }
+
 
 export default function CarouselDemo() {
   const [examTime, setExamTime] = useState<string[]>(["111-1"]);
   const [examType, setExamType] = useState<string[]>(["醫學3"]);
   const [questionList, setQuestionList] = useState<Question[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [selectMode, setSelectMode] = useState(false)
+  
 
   const handleStart = async () => {
     setLoading(true);
@@ -61,18 +74,18 @@ export default function CarouselDemo() {
   };
 
   return (
-    <div className="mx-auto w-full bg-gray-100s content-center h-dvh p-6 md:flex justify-center space-x-15">
+    <div className="mx-auto w-full bg-gray-100s content-center h-dvh p-6 md:flex justify-center space-x-15" >
       <Card className="w-full md:w-1/5 flex-none mb-4">
         <div className="relative">
           <p className="justify-self-center font-semibold text-xl mb-2">
             選擇考試時間
           </p>
-
+{/* 
           <div className="absolute right-0 top-0 -translate-y-1/2">
             <ModeToggle />
-          </div>
+          </div> */}
           <div className="grid grid-cols-2 ">
-            {["111-1", "111-2", "112-1", "112-2", "113-1", "113-2"].map(
+            {["111-1", "111-2", "112-1", "112-2", "113-1", "113-2", "114-1"].map(
               (items, id) => (
                 <Button
                   key={id}
@@ -127,9 +140,18 @@ export default function CarouselDemo() {
             </Button>
           )}
         </div>
+        <div className="flex flex-col gap-2 px-2 text-xl font-semibold">
+          工具列
+          <div className="flex flex-left gap-2 flex-wrap">
+            <ToggleDragMode onToggle={() => setSelectMode(prev => !prev)} status={selectMode}/>
+            <ModeToggle />
+          </div>
+        </div>
+        
       </Card>
 
-      <Carousel className=" w-full md:w-3/5 justify-self-center">
+      <Carousel 
+        opts={{ watchDrag: !selectMode } } className="w-full md:w-3/5 justify-self-center">
         {!loading ? (
           <CarouselContent>
             {questionList.map((items, index) => (
@@ -158,7 +180,7 @@ export default function CarouselDemo() {
                           key={opt}
                           //   onClick={() => handleAnswer(currentIndex, opt)}
                           className={`block border-2 w-full text-left rounded-sm px-4 py-2 mb-2  ${
-                            items.answer === opt
+                            items.answer.includes(opt)
                               ? "bg-indigo-800 text-white font-semibold"
                               : ""
                           }`}
@@ -181,12 +203,20 @@ export default function CarouselDemo() {
                         </p>
                       ))}
                     </CardContent>
+                    {/* <div>
+                        {items.gpt_choice && <>{items.gpt_choice}</>}
+                      </div> */}
                     <CardFooter>
                       {items.question === null ? (
                         <>詳解如下:</>
                       ) : (
                         <>本題還未有詳解</>
                       )}
+                      
+                      {/* <div>
+                        {items.gpt_reason && <ReasonDisplay text={items.gpt_reason}/>}
+                      </div> */}
+                      
                     </CardFooter>
                   </Card>
                 </div>

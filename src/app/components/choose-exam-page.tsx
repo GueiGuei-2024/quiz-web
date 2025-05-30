@@ -9,12 +9,12 @@ import { Button } from "@/components/ui/button";
 import { NotebookPenIcon, GoalIcon, Loader2, Undo2 } from "lucide-react";
 import { ModeToggle } from "./ModeToggle";
 import { useState } from "react";
-import { getQuestions, fetchPictureURL } from "@/lib/appwrite";
+import { getQuestions, fetchPictureURL } from "@/appwrite/questionbank";
 import { Separator } from "@/components/ui/separator";
 import { AppwriteQuestion, Question } from "../types";
 import Link from "next/link";
 
-const examTimes = ["111-1", "111-2", "112-1", "112-2", "113-1", "113-2"];
+const examTimes = ["111-1", "111-2", "112-1", "112-2", "113-1", "113-2", "114-1"];
 const examTypes = ["醫學3", "醫學4", "醫學5", "醫學6"];
 
 type Props = {

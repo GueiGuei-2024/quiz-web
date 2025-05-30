@@ -4,7 +4,7 @@ import { useState } from "react"
 // import StartPage from "../components/start-page"
 import ResultPage from "../components/result-page"
 import type { Question, AnswerQuestion } from "../types"
-import { createNewCollection } from "@/lib/appwrite"
+import { createNewCollection } from "@/appwrite/questionbank"
 import QuizPage from "../components/quiz-page"
 import ChooseExamPage from "../components/choose-exam-page"
 

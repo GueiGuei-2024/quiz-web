@@ -13,7 +13,9 @@ export type Question = {
   exam_type:string;
   tag:string;
   optionIsPicture?: string|null;
-  bind?: string|null
+  bind?: string|null ;
+  gpt_choice?: string|null;
+  gpt_reason?: string|null;
 }
 export type AppwriteQuestion =Models.Document & {
   question_number:number;
