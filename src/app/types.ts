@@ -39,3 +39,11 @@ export type AnswerQuestion = Question & {
   corrected: boolean|null;
   index: number;
 }
+
+export type AppUser = {
+  name: string;
+  email: string;
+  imageUrl?: string;
+  joinedAt?: string;
+  accountId: string;
+};

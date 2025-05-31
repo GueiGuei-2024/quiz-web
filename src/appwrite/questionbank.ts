@@ -1,30 +1,16 @@
-import {  Query, ID } from "appwrite";
-import { database, storage, account, appwriteConfig  } from "./client";
-
-// const BUCKET_ID = process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID!;
-// const DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!;
-// const COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID!;
-// const COLLECTION_ID_RECORD=process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_RECORD!;
-// const COLLECTION_ID_USERS=process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_USERS!;
-
-// const client = new Client()
-//   .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
-//   .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID!);
-
-// const storage = new Storage(client);
-// const databases = new Databases(client);
-// const account = new Account(client);
+import { Query, ID } from "appwrite";
+import { database, storage, appwriteConfig } from "./client";
 
 export async function getQuestions(examTimes: string[], examTypes: string[]) {
   return await database.listDocuments(
-    appwriteConfig.databaseId, 
-    appwriteConfig.questionCollectionId, 
+    appwriteConfig.databaseId,
+    appwriteConfig.questionCollectionId,
     [
-    Query.contains("exam_time", examTimes),
-    Query.contains("exam_type", examTypes),
-    Query.limit(3200),
-  ]
-);
+      Query.contains("exam_time", examTimes),
+      Query.contains("exam_type", examTypes),
+      Query.limit(3200),
+    ]
+  );
 }
 
 export async function fetchPictureURL(
@@ -40,73 +26,35 @@ export async function fetchPictureURL(
   }
 }
 
-export async function signUp(email: string, password: string) {
-  try {
-    const res=await account.create(ID.unique(), email, password)
-    console.log("success!!", res)
-    return res
-  } catch (error) {
-    console.log("error", error)
-    throw error
-  }
-}
-
-export async function checkLogin(email: string, password: string) {
-  try {
-    const res=await account.createEmailPasswordSession(email, password)
-    console.log("成功登入success!!", res)
-    return res
-  } catch (error) {
-    console.log("登入失敗error", error)
-    throw error
-  }
-}
-
-export async function getCurrentUser (){
-  try {
-    const user = await account.get()
-    return user
-  } catch (error) {
-    console.log(error)
-    return null
-  }
-
-}
-
-export async function logOut(){
-  await account.deleteSession("current")
-}
 
 export async function createNewCollection(
-  time:string, 
-  exam_time:string, 
-  exam_type:string,
-  number:number, 
-  correct:number, 
-  wrong:number, 
-  unanswered:number
-){
+  time: string,
+  exam_time: string,
+  exam_type: string,
+  number: number,
+  correct: number,
+  wrong: number,
+  unanswered: number
+) {
   try {
-    const res=await database.createDocument(
+    const res = await database.createDocument(
       appwriteConfig.databaseId,
       appwriteConfig.recordCollectionId,
       ID.unique(),
       {
-        test_time:time,
-        exam_time:exam_time,
-        exam_type:exam_type,
-        total_number:number,
-        correct:correct,
-        wrong:wrong,
-        unanswered: unanswered
+        test_time: time,
+        exam_time: exam_time,
+        exam_type: exam_type,
+        total_number: number,
+        correct: correct,
+        wrong: wrong,
+        unanswered: unanswered,
       }
-    )
-    console.log("success!!")
-    console.log(res)
+    );
+    console.log("success!!");
+    console.log(res);
   } catch (error) {
-    console.log(error)
-    throw error
+    console.log(error);
+    throw error;
   }
 }
-
-// export {account, storage, databases, BUCKET_ID, DATABASE_ID, COLLECTION_ID };

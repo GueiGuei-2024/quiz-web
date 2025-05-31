@@ -1,32 +1,15 @@
 "use client";
 
-import Layout from "./components/Layout";
-import { useState, useEffect } from "react";
-import { getCurrentUser } from "@/appwrite/questionbank";
-import { FullscreenLoading } from "./components/LoadingAnimation";
+import Navbar from "./components/Navbar";
+// import { FullscreenLoading } from "./components/LoadingAnimation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export default function About() {
-  const [isLogin, setIsLogin] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    getCurrentUser().then((userdata) => {
-      if (userdata) {
-        setIsLogin(true);
-        console.log(userdata);
-      } else {
-        setIsLogin(false);
-      }
-    });
-    setIsLoading(false);
-  }, []);
-
+  
   return (
     <div>
-      {isLoading && <FullscreenLoading content={"等待中..."} />}
-      <Layout isLogin={isLogin}>
+      <Navbar >
         <div className="text-center">
           <div className="flex flex-wrap justify-center gap-8 items-center my-4 overflow-auto">
             <Link href="./test" className="shrink">
@@ -59,7 +42,7 @@ export default function About() {
             <Link href="./old-version-page">舊版測驗網站</Link>
           </div>
         </div>
-      </Layout>
+      </Navbar>
     </div>
   );
 }

@@ -1,13 +1,11 @@
-"use client";
-
-import { LoginForm } from "../components/login-form";
+import { SignUpForm } from "@/app/components/signup-form";
 import Navbar from "../components/Navbar";
 
-export default function LoginPage() {
+export default function SingUpPage() {
   return (
     <Navbar>
       <div className="flex justify-center items-center h-screen">
-        <LoginForm />
+        <SignUpForm />
       </div>
     </Navbar>
   );

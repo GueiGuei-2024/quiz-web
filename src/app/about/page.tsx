@@ -8,6 +8,7 @@ import Link from "next/link";
 import { logoutUser } from "@/appwrite/appwrite-auth";
 import { useRouter } from "next/navigation";
 import { account } from "@/appwrite/client";
+import Navbar from "../components/Navbar";
 
 const currentLoader= async()=>{
   try{
@@ -37,11 +38,14 @@ export default function About() {
   }
     
   return (
-    <div className="flex gap-10">
+    <Navbar>
+      <div className="flex gap-10">
         <Link href={'./login'}>登入</Link>
         <button onClick={handleLogout}>
           登出
         </button>
     </div>
+    </Navbar>
+    
   );
 }

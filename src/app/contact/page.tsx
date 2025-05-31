@@ -1,9 +1,8 @@
 "use client";
 
-import Layout from "../components/Layout";
-import { useState, useEffect } from "react";
-import { getCurrentUser } from "@/appwrite/questionbank";
-import { FullscreenLoading } from "../components/LoadingAnimation";
+import Navbar from "../components/Navbar";
+import { useState} from "react";
+// import { FullscreenLoading } from "../components/LoadingAnimation";
 
 import {
   Card,
@@ -37,9 +36,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { ModeToggle } from "../components/ModeToggle";
 
+
 export default function About() {
-  const [isLogin, setIsLogin] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [report, setReport] = useState("");
@@ -97,22 +95,10 @@ export default function About() {
     }
   };
 
-  useEffect(() => {
-    getCurrentUser().then((userdata) => {
-      if (userdata) {
-        setIsLogin(true);
-        console.log(userdata);
-      } else {
-        setIsLogin(false);
-      }
-    });
-    setIsLoading(false);
-  }, []);
 
   return (
     <div>
-      {isLoading && <FullscreenLoading content={"等待中..."} />}
-      <Layout isLogin={isLogin}>
+      <Navbar>
         <Card className="w-full max-w-xl max-h-[90vh] overflow-auto ">
           <CardHeader className="relative">
             <CardTitle className="text-2xl">聯絡作者</CardTitle>
@@ -218,7 +204,7 @@ export default function About() {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-      </Layout>
+      </Navbar>
     </div>
   );
 }
