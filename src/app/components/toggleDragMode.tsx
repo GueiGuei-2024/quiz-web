@@ -25,7 +25,7 @@ export default function ToggleDragMode({ onToggle, status }: ToggleDragModeProps
         </Button>
       </HoverCardTrigger>
       <HoverCardContent className="w-auto">
-        <div className=" text-xs text-center font-semibold border rounded-md px-2 py-1 mt-1">
+        <div className="text-xs text-center font-semibold border rounded-md px-2 py-1 mt-1">
             {status
             ?"滑動解鎖"
             :"滑動鎖定"

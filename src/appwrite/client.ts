@@ -1,4 +1,4 @@
-import { Account, Client, Databases, Storage } from "appwrite"
+import { Account, Client, Databases, Storage, Avatars } from "appwrite"
 
 export const appwriteConfig={
     endpointUrl: process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!,
@@ -22,5 +22,6 @@ const client =new Client()
 const account = new Account(client)
 const database = new Databases(client)
 const storage = new Storage(client)
+const avatars = new Avatars(client)
 
-export {client, account, database, storage}
+export {client, account, database, storage, avatars}

@@ -46,4 +46,6 @@ export type AppUser = {
   imageUrl?: string;
   joinedAt?: string;
   accountId: string;
+  avatar_name?: string;
+  avatar_bg?: string;
 };

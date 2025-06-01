@@ -1,5 +1,5 @@
 import { OAuthProvider, Query, ID, AppwriteException } from "appwrite";
-import { account, appwriteConfig, database } from "./client";
+import { account, appwriteConfig,  database } from "./client";
 import { AppUser } from "@/app/types";
 
 export async function signUpWithEmail({
@@ -14,6 +14,31 @@ export async function signUpWithEmail({
   try {
     const res = await account.create(ID.unique(), email, password, name);
     console.log("success!!", res);
+
+    function getInitialFromName(name: string): string {
+      if (!name) return "";
+      const firstChar = name.trim().charAt(0);
+      const isChinese = /[\u4e00-\u9fff]/.test(firstChar);
+      return isChinese ? firstChar : firstChar.toUpperCase();
+    }
+
+    const avatarColors = [
+      "bg-orange-600",
+      "bg-sky-700",
+      "bg-teal-700",
+      "bg-amber-600",  
+      "bg-purple-600",
+      "bg-pink-600",
+    ];
+
+    function getRandomColor(): string {
+      const index = Math.floor(Math.random() * avatarColors.length);
+      return avatarColors[index];
+    }
+    const avatar_name = getInitialFromName(name);
+    const avatar_bg=getRandomColor()
+
+
     await database.createDocument(
       appwriteConfig.databaseId,
       appwriteConfig.userCollectionId,
@@ -23,6 +48,8 @@ export async function signUpWithEmail({
         email: email,
         accountId: res.$id,
         joinedAt: res.$createdAt,
+        avatar_name: avatar_name,
+        avatar_bg: avatar_bg,
       }
     );
     return { success: true };
@@ -85,7 +112,7 @@ export const getUser = async () => {
       appwriteConfig.userCollectionId,
       [
         Query.equal("accountId", user.$id),
-        Query.select(["name", "email", "imageUrl", "joinedAt", "accountId"]),
+        Query.select(["name", "email", "imageUrl", "joinedAt", "accountId", "avatar_name", "avatar_bg"]),
       ]
     );
 
@@ -103,6 +130,8 @@ export const getUser = async () => {
       imageUrl: doc.imageUrl,
       joinedAt: doc.joinedAt,
       accountId: doc.accountId,
+      avatar_name: doc.avatar_name,
+      avatar_bg: doc.avatar_bg,
     };
 
     return appUser;
