@@ -1,5 +1,5 @@
 import { OAuthProvider, Query, ID, AppwriteException } from "appwrite";
-import { account, appwriteConfig,  database } from "./client";
+import { account, appwriteConfig, database } from "./client";
 import { AppUser } from "@/app/types";
 
 export async function signUpWithEmail({
@@ -26,7 +26,7 @@ export async function signUpWithEmail({
       "bg-orange-600",
       "bg-sky-700",
       "bg-teal-700",
-      "bg-amber-600",  
+      "bg-amber-600",
       "bg-purple-600",
       "bg-pink-600",
     ];
@@ -36,8 +36,7 @@ export async function signUpWithEmail({
       return avatarColors[index];
     }
     const avatar_name = getInitialFromName(name);
-    const avatar_bg=getRandomColor()
-
+    const avatar_bg = getRandomColor();
 
     await database.createDocument(
       appwriteConfig.databaseId,
@@ -105,6 +104,7 @@ export const logoutUser = async () => {
 export const getUser = async () => {
   try {
     const user = await account.get();
+    console.log("資料user讀取:", user.$id);
     if (!user) return null;
 
     const res = await database.listDocuments(
@@ -112,7 +112,15 @@ export const getUser = async () => {
       appwriteConfig.userCollectionId,
       [
         Query.equal("accountId", user.$id),
-        Query.select(["name", "email", "imageUrl", "joinedAt", "accountId", "avatar_name", "avatar_bg"]),
+        Query.select([
+          "name",
+          "email",
+          "imageUrl",
+          "joinedAt",
+          "accountId",
+          "avatar_name",
+          "avatar_bg",
+        ]),
       ]
     );
 
@@ -215,7 +223,13 @@ export const storeUserdata = async () => {
 
 export const getExstingUser = async () => {
   try {
+    const user = await account.get();
+    if (!user) return null;
+    console.log(user.$id)
+
+    return user.$id;
   } catch (e) {
-    console.log(e);
+    console.log("沒有取得id", e);
+    return null;
   }
 };

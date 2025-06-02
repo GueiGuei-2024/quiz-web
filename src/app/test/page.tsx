@@ -7,6 +7,10 @@ import type { Question, AnswerQuestion } from "../types"
 import { createNewCollection } from "@/appwrite/questionbank"
 import QuizPage from "../components/quiz-page"
 import ChooseExamPage from "../components/choose-exam-page"
+import { getExstingUser } from "@/appwrite/appwrite-auth"
+
+
+const userId = await getExstingUser()
 
 export default function QuizEntry() {
   const [stage, setStage] = useState<"start"| "quiz" | "result">("start")
@@ -27,15 +31,32 @@ export default function QuizEntry() {
   const handleFinish = (answers: AnswerQuestion[], timeSpend:number) => {
     setAnsweredQuestions(answers)
     setTimeSpend(timeSpend)
-    const currenTime=new Date().toISOString()
+    
+    const answer_status: ("C" | "W" | "U")[] = answers.map(item => {
+  if (item.corrected === null) {
+    return "U";
+  } else if (item.corrected === true) {
+    return "C";
+  } else {
+    return "W"; // 包括 corrected === false 或其他 fallback
+  }
+});
+    const formal_test_time = examType === "formal" ? `${answers[0]?.exam_time}-${answers[0]?.exam_type}` || null : null
+
+    console.log("答題狀況 :", answer_status)
     createNewCollection(
-      currenTime, 
-      answers[0].exam_time, 
-      answers[0].exam_type,
+      userId,
+      new Date().toISOString(), 
+      examType,
+      answers.map(item => item.title),
+      answer_status, 
+      answers.map(item => item.tag),
       answers.length,
       answers.filter((a) => a.corrected).length,
       answers.filter((a) => a.corrected===false && a.selected).length,
-      answers.filter((a) => a.selected===null).length
+      answers.filter((a) => a.selected===null).length,
+      timeSpend,
+      formal_test_time
     )
 
     setStage("result")

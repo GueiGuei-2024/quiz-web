@@ -22,7 +22,6 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
         setUserData(user);
       }
       setIsLoading(false);
-      console.log(user);
     };
     fetchUser();
   }, []);

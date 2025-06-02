@@ -28,13 +28,18 @@ export async function fetchPictureURL(
 
 
 export async function createNewCollection(
-  time: string,
-  exam_time: string,
-  exam_type: string,
+  userId:string|null,
+  createdAt: string,
+  test_category: string,
+  question_order: string[],
+  question_status: string[],
+  tag_order: string[],
   number: number,
   correct: number,
   wrong: number,
-  unanswered: number
+  unanswered: number,
+  time_consumption: number,
+  exam_time: string|null,
 ) {
   try {
     const res = await database.createDocument(
@@ -42,13 +47,18 @@ export async function createNewCollection(
       appwriteConfig.recordCollectionId,
       ID.unique(),
       {
-        test_time: time,
-        exam_time: exam_time,
-        exam_type: exam_type,
+        userId: userId,
+        createdAt: createdAt,
+        test_category: test_category,
+        question_order: question_order,
+        question_status: question_status,
+        tag_order: tag_order,
         total_number: number,
         correct: correct,
         wrong: wrong,
         unanswered: unanswered,
+        time_consumption: time_consumption,
+        formal_test_type: exam_time
       }
     );
     console.log("success!!");

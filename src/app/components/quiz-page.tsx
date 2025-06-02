@@ -96,7 +96,7 @@ export default function QuizPage({
 
   const setFinish = (answer: AnswerQuestion[]) => {
     const timespend = timeLimit * 60 - remainingTimeRef.current;
-    console.log(timespend);
+    
     if (confirm("確定要送出答案嗎? 送出答案後無法再進行修改。") == true) {
       onFinish(answer, timespend);
     }

@@ -13,6 +13,7 @@ import {
   DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { useRouter } from "next/navigation";
 type AvatarDropDownProps = {
   photourl?: string;
   name: string|undefined;
@@ -23,6 +24,8 @@ type AvatarDropDownProps = {
 };
 
 export default function AvatarDropDown({photourl, name, email, avatar_name, avatar_bg, onLogout}:AvatarDropDownProps) {
+  const router = useRouter()
+  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -47,7 +50,7 @@ export default function AvatarDropDown({photourl, name, email, avatar_name, avat
         <DropdownMenuSeparator/>
         <DropdownMenuGroup>
           <DropdownMenuItem>個人資料</DropdownMenuItem>
-          <DropdownMenuItem>考試紀錄</DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer" onClick={()=>router.push('/analysis')}>考試紀錄</DropdownMenuItem>
           {/* <DropdownMenuItem>訂閱</DropdownMenuItem> */}
         </DropdownMenuGroup>
         <DropdownMenuSeparator/>

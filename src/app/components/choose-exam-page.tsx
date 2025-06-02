@@ -67,7 +67,7 @@ export default function ChooseExamPage({ onStart }: Props) {
 
       const res = await getQuestions(selectedExamTimes, selectedExamTypes);
       const data = res.documents.map((doc) => doc as AppwriteQuestion);
-
+ 
       const updated = await Promise.all(
         data.map(async (q) => {
           if (q.picture) {

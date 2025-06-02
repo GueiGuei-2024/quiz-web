@@ -49,3 +49,25 @@ export type AppUser = {
   avatar_name?: string;
   avatar_bg?: string;
 };
+
+export type ExamData = Models.Document&{
+  userId: string;
+  createdAt: string;
+  test_category: "quick" | "formal" | "custom";
+  question_order: string[];
+  question_status: string[];
+  tag_order: string[];
+  total_number: number;
+  correct: number;
+  wrong: number;
+  unanswered: number;
+  time_consumption: number;
+  formal_test_type: string;
+  $id: string;
+  $createdAt: string;
+  $updatedAt: string;
+  localDate: string;
+  localDateTime: string;
+  correctRate: number;
+  
+}
