@@ -79,7 +79,7 @@ export function SectionCards({ data }:{data:ExamData[]}) {
     <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>本周考試次數</CardDescription>
+          <CardDescription>本週考試次數</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             {weekStat.count.thisWeek}
           </CardTitle>
@@ -93,11 +93,11 @@ export function SectionCards({ data }:{data:ExamData[]}) {
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           {weekStat.count.change >= 0 ? (
             <div className="line-clamp-1 flex gap-2 font-medium">
-              本周考試次數增加 <TrendingUp className="size-4" />
+              本週考試次數增加 <TrendingUp className="size-4" />
             </div>
           ) : (
             <div className="line-clamp-1 flex gap-2 font-medium">
-              本周考試次數減少 <TrendingDown className="size-4" />
+              本週考試次數減少 <TrendingDown className="size-4" />
             </div>
           )}
           <div className="text-muted-foreground">
@@ -107,7 +107,7 @@ export function SectionCards({ data }:{data:ExamData[]}) {
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>本周作答題數</CardDescription>
+          <CardDescription>本週作答題數</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             {weekStat.total.thisWeek}
           </CardTitle>
@@ -121,11 +121,11 @@ export function SectionCards({ data }:{data:ExamData[]}) {
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           {weekStat.total.change >= 0 ? (
             <div className="line-clamp-1 flex gap-2 font-medium">
-              本周作答題數增加 <TrendingUp className="size-4" />
+              本週作答題數增加 <TrendingUp className="size-4" />
             </div>
           ) : (
             <div className="line-clamp-1 flex gap-2 font-medium">
-              本周作答題數減少 <TrendingDown className="size-4" />
+              本週作答題數減少 <TrendingDown className="size-4" />
             </div>
           )}
           <div className="text-muted-foreground">
@@ -135,7 +135,7 @@ export function SectionCards({ data }:{data:ExamData[]}) {
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>本周答對率</CardDescription>
+          <CardDescription>本週答對率</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             {weekStat.correctRateThis}%
           </CardTitle>
@@ -149,7 +149,7 @@ export function SectionCards({ data }:{data:ExamData[]}) {
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           {accuracyChange >= 0 ? (
             <div className="line-clamp-1 flex gap-2 font-medium">
-              本周答對率增加 <TrendingUp className="size-4" />
+              本週答對率增加 <TrendingUp className="size-4" />
             </div>
           ) : (
             <div className="line-clamp-1 flex gap-2 font-medium">
@@ -161,7 +161,7 @@ export function SectionCards({ data }:{data:ExamData[]}) {
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>本周總計考試作答時間</CardDescription>
+          <CardDescription>本週總計考試作答時間</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-2xl">
             {hourMinCal(weekStat.timeSpendThis)}
           </CardTitle>

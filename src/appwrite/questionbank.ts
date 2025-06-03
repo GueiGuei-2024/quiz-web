@@ -39,7 +39,7 @@ export async function createNewCollection(
   wrong: number,
   unanswered: number,
   time_consumption: number,
-  exam_time: string|null,
+  exam_time: string,
 ) {
   try {
     const res = await database.createDocument(

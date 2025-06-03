@@ -82,51 +82,6 @@ export default function ResultPage({
   });
 
   // 🔍 印出來檢查
-  console.log(tagScoreList);
-  console.log(tagStats);
-  // const labels = Object.keys(tagStats);
-  // const correctRates = labels.map((tag) =>
-  //   tagStats[tag].total
-  //     ? (tagStats[tag].correct / tagStats[tag].total) * 100
-  //     : 0
-  // );
-
-  // const chartData = {
-  //   labels,
-  //   datasets: [
-  //     {
-  //       label: "正確率 (%)",
-  //       data: correctRates,
-  //       backgroundColor: "rgba(75, 192, 192, 0.6)",
-  //       borderColor: "rgba(75, 192, 192, 1)",
-  //       borderWidth: 1,
-  //     },
-  //   ],
-  // };
-
-  // const barOptions = {
-  //   responsive: true,
-  //   plugins: {
-  //     legend: { display: false },
-  //     title: { display: true, text: "科別正確率分析 (長條圖)" },
-  //   },
-  //   scales: { y: { beginAtZero: true, max: 100 } },
-  // };
-
-  // const radarOptions = {
-  //   responsive: true,
-  //   plugins: {
-  //     legend: { display: false },
-  //     title: { display: true, text: "科別正確率分析 (雷達圖)" },
-  //   },
-  //   scales: {
-  //     r: {
-  //       angleLines: { display: true },
-  //       suggestedMin: 0,
-  //       suggestedMax: 100,
-  //     },
-  //   },
-  // };
 
   const filteredQuestions = answeredQuestions
     .map((q, i) => ({ question: q, index: i }))

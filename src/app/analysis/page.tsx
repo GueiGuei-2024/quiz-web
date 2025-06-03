@@ -11,6 +11,8 @@ import {
 } from "../components/LoadingAnimation";
 import { ModeToggle } from "../components/ModeToggle";
 import { ExamData } from "../types";
+import { ChartAreaInteractive } from "./chart-area-interactive";
+import { ChartFormal } from "./chart-formal";
 
 export default function Analysis() {
   const [data, setData] = useState<ExamData[]>([]);
@@ -42,7 +44,6 @@ export default function Analysis() {
 
     return {
       ...item,
-      formal_test_type: item.formal_test_type ?? "-",
       localDate: localDate.toLocaleDateString("zh-TW"),
       localDateTime: localDate.toLocaleString("zh-TW"),
       correctRate: (item.correct / item.total_number) * 100,
@@ -60,13 +61,13 @@ export default function Analysis() {
       tagStats[tag][status as "C" | "W" | "U"] += 1;
     });
   });
-
+  console.log(tableData)
   // 計算每科的答對率
-  Object.entries(tagStats).forEach(([tag, { C, W, U }]) => {
-    const total = C + W + U;
-    const accuracy = ((C / total) * 100).toFixed(1);
-    console.log(`${tag}: ${accuracy}% (${C}/${total})`);
-  });
+//   Object.entries(tagStats).forEach(([tag, { C, W, U }]) => {
+//     const total = C + W + U;
+//     const accuracy = ((C / total) * 100).toFixed(1);
+//     console.log(`${tag}: ${accuracy}% (${C}/${total})`);
+//   });
   return (
     <div className="max-w-4xl p-4 my-2 mx-auto border-2 rounded-md">
       {loading && <FullscreenLoading content="資料載入中...." />}
@@ -82,10 +83,29 @@ export default function Analysis() {
         <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
           <SectionCards data={tableData} />
           <div className="container mx-auto py-10">
+            <ChartAreaInteractive data={tableData}/>
+          </div>
+          <div className="container mx-auto py-10">
+            <ChartFormal data={tableData}/>
+          </div>
+          <div className="container mx-auto py-10">
             <DataTable columns={columns} data={tableData} />
           </div>
+          
         </div>
       </div>
     </div>
   );
 }
+
+// sever side render需要所有資料都從server端登入!
+// import AnalysisClient from "./AnalysisClient";
+// import { fetchExamData } from "@/appwrite/appwrite-anaylsis";
+
+// export default async function AnalysisPage() {
+//   const res = await fetchExamData();
+//   const docs = res?.documents || [];
+//   console.log("res:", res)
+
+//   return <AnalysisClient initialData={docs} />;
+// }
