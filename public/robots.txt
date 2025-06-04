@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://taiwan-doctor-examination.netlify.app/
+
+# Sitemaps
+Sitemap: https://taiwan-doctor-examination.netlify.app/sitemap.xml

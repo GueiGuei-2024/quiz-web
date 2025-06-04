@@ -1,9 +1,9 @@
 "use client";
 
 import Navbar from "./components/Navbar";
-// import { FullscreenLoading } from "./components/LoadingAnimation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+
 
 export default function About() {
   

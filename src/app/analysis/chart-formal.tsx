@@ -30,7 +30,7 @@ function RadialChartItem({
   data,
   exam_type,
 }: {
-  data: (ExamData&{exam_time:string, exam_type:string})[];
+  data: (ExamData & { exam_time: string; exam_type: string })[];
   exam_type: string;
 }) {
   const item = data.find((d) => d.exam_type === exam_type);
@@ -85,8 +85,7 @@ function RadialChartItem({
   );
 }
 
-
-export function ChartFormal({ data }:{data:ExamData[]}) {
+export function ChartFormal({ data }: { data: ExamData[] }) {
   const [examTime, setExamTime] = React.useState("114-1");
   const chartData = data
     .filter((item) => item.test_category === "formal")
@@ -129,48 +128,52 @@ export function ChartFormal({ data }:{data:ExamData[]}) {
   );
 
   return (
-    <Card className="@container/card">
-      <CardHeader >
-        <CardTitle>正式考試分析</CardTitle>
-        <CardDescription>
-          <span >
-            最新作答狀況
-          </span>
-        </CardDescription>
-        <CardAction className="mt-2 sm:mt-0">
-          <Select value={examTime} onValueChange={setExamTime}>
-            <SelectTrigger className="w-auto" size="sm" aria-label="選擇考試別">
-              <SelectValue placeholder="選擇考試別" />
-            </SelectTrigger>
-            <SelectContent className="rounded-xl max-h-60 overflow-y-auto">
-              {[
-                "114-1",
-                "113-2",
-                "113-1",
-                "112-2",
-                "112-1",
-                "111-2",
-                "111-1",
-              ].map((exam) => (
-                <SelectItem key={exam} value={exam} className="rounded-lg">
-                  {exam}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </CardAction>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-2">
-          {chartSubjects.map((subject) => (
-            <RadialChartItem
-              key={subject}
-              data={filteredChartData}
-              exam_type={subject}
-            />
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+    <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card  *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs ">
+      <Card className="@container/card">
+        <CardHeader>
+          <CardTitle>正式考試分析</CardTitle>
+          <CardDescription>
+            <span>最新作答狀況</span>
+          </CardDescription>
+          <CardAction className="mt-2 sm:mt-0">
+            <Select value={examTime} onValueChange={setExamTime}>
+              <SelectTrigger
+                className="w-auto"
+                size="sm"
+                aria-label="選擇考試別"
+              >
+                <SelectValue placeholder="選擇考試別" />
+              </SelectTrigger>
+              <SelectContent className="rounded-xl max-h-60 overflow-y-auto">
+                {[
+                  "114-1",
+                  "113-2",
+                  "113-1",
+                  "112-2",
+                  "112-1",
+                  "111-2",
+                  "111-1",
+                ].map((exam) => (
+                  <SelectItem key={exam} value={exam} className="rounded-lg">
+                    {exam}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </CardAction>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-2">
+            {chartSubjects.map((subject) => (
+              <RadialChartItem
+                key={subject}
+                data={filteredChartData}
+                exam_type={subject}
+              />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

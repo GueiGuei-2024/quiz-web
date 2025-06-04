@@ -13,6 +13,7 @@ import { ModeToggle } from "../components/ModeToggle";
 import { ExamData } from "../types";
 import { ChartAreaInteractive } from "./chart-area-interactive";
 import { ChartFormal } from "./chart-formal";
+import { ChartRadar } from "./chartRadar";
 
 export default function Analysis() {
   const [data, setData] = useState<ExamData[]>([]);
@@ -87,6 +88,9 @@ export default function Analysis() {
           </div>
           <div className="container mx-auto py-10">
             <ChartFormal data={tableData}/>
+          </div>
+          <div className="container mx-auto py-10">
+            <ChartRadar data={tableData}/>
           </div>
           <div className="container mx-auto py-10">
             <DataTable columns={columns} data={tableData} />
