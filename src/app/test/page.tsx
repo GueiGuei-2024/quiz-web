@@ -32,7 +32,7 @@ export default function QuizEntry() {
     setStage("quiz");
   };
 
-  const handleFinish = (answers: AnswerQuestion[], timeSpend: number) => {
+  const handleFinish = async (answers: AnswerQuestion[], timeSpend: number) => {
     setAnsweredQuestions(answers);
     setTimeSpend(timeSpend);
 
@@ -51,7 +51,9 @@ export default function QuizEntry() {
         ? `${answers[0]?.exam_time}-${answers[0]?.exam_type}`
         : "";
     console.log("答題狀況 :", answer_status);
-    createNewCollection(
+
+    try {
+      await createNewCollection(
       userId,
       new Date().toISOString(),
       examType,
@@ -65,8 +67,12 @@ export default function QuizEntry() {
       timeSpend,
       formal_test_time
     );
-
     setStage("result");
+
+    } catch(e){
+      console.log(e)
+    }
+    
   };
 
   const handleRestart = () => {
