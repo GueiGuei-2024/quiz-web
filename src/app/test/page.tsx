@@ -54,6 +54,7 @@ export default function QuizEntry() {
 
     try {
       const userId = await getExstingUser();
+      console.log(userId)
       await createNewCollection(
       userId,
       new Date().toISOString(),
