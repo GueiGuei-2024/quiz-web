@@ -9,7 +9,7 @@ import QuizPage from "../components/quiz-page";
 import ChooseExamPage from "../components/choose-exam-page";
 import { getExstingUser } from "@/appwrite/appwrite-auth";
 
-const userId = await getExstingUser();
+
 
 export default function QuizEntry() {
   const [stage, setStage] = useState<"start" | "quiz" | "result">("start");
@@ -53,6 +53,7 @@ export default function QuizEntry() {
     console.log("答題狀況 :", answer_status);
 
     try {
+      const userId = await getExstingUser();
       await createNewCollection(
       userId,
       new Date().toISOString(),
