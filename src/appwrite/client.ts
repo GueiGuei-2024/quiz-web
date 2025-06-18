@@ -13,6 +13,8 @@ export const appwriteConfig={
     contactCollectionId: process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_CONTACT!,
     apiKey:process.env.NEXT_PUBLIC_APPWRITE_APIKEY!,
 
+    assayCollectionId: process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ASSAY!,
+
 }
 
 const client =new Client()

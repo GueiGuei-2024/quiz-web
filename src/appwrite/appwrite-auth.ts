@@ -51,6 +51,7 @@ export async function signUpWithEmail({
         avatar_bg: avatar_bg,
       }
     );
+    
     return { success: true };
   } catch (error: unknown) {
     if (error instanceof AppwriteException) {
@@ -71,6 +72,8 @@ export async function loginWithEmail({
   try {
     const res = await account.createEmailPasswordSession(email, password);
     console.log("成功登入success!!", res);
+    const k = await account.createVerification("http://localhost:3000/verification");
+    console.log(k)
     return { success: true };
   } catch (error: unknown) {
     if (error instanceof AppwriteException) {
@@ -104,7 +107,7 @@ export const logoutUser = async () => {
 export const getUser = async () => {
   try {
     const user = await account.get();
-    console.log("資料user讀取:", user.$id);
+    console.log("資料user讀取:", user);
     if (!user) return null;
 
     const res = await database.listDocuments(
